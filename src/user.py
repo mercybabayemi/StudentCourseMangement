@@ -5,9 +5,9 @@ import bcrypt
 from email_validator import validate_email, EmailNotValidError
 
 class User:
-    def __init__(self):
+    def __init__(self, password):
         self.__email = "email"
-        self.__hashed_password = self.__hashed_password("password")
+        self.__hashed_password = self.__hashed_password(self.validate_user_password(password))
         self.__first_name = "first_name"
         self.__last_name = "last_name"
 
@@ -68,8 +68,13 @@ class User:
         return lastname
 
     def validate_user_email(self, value):
-        try:
             email = validate_email(value)
+            if not email:
+                raise EmailNotValidError("Email not valid.")
             return email
-        except EmailNotValidError as e:
-            print("Email not valid.")
+
+    def save_to_file(self):
+        raise NotImplementedError("Subclass must implement save to file method.")
+
+    def load_to_file(self):
+        raise NotImplementedError("Subclass must implement load to file method.")

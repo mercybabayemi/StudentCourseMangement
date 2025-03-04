@@ -1,49 +1,46 @@
 from user import User
 
 class Student(User):
-
     def register(self):
-        validate_process_one = True
-        firstname = ""
-        lastname = ""
-        password = ""
-        email = ""
-
-        while validate_process_one:
-            firstname_input = input("""
+        while True:
+            try:
+                firstname_input = input("""
                                 Your firstname cannot be an empty space or contain space character
                                 Enter your firstname:
                     """)
-            try:
+
                 firstname = self.validate_user_firstname(firstname_input)
-                validate_process_one = False
-            except ValueError:
-                print("Invalid Input.")
-
-        validate_process_two = True
-
-        while validate_process_two:
-            lastname_input = input("""
-                                Your lastname cannot be an empty space or contain space character
-                                Enter your lastname:
-                    """)
-            try:
+                self.first_name(firstname)
+                lastname_input = input("""
+                                                Your lastname cannot be an empty space or contain space character
+                                                Enter your lastname:
+                                    """)
                 lastname = self.validate_user_lastname(lastname_input)
-                validate_process_one = False
+                self.last_name(lastname)
+                password_input = input("""
+                                                Username must contain capital letters
+                                                Username must contain small letters
+                                                Username must contain at least 1 number, at least 1 punctuation and must be 8 to 16 alphanumeric - symbol long
+                                                Enter your password:
+                                    """)
+                self.__
             except ValueError:
                 print("Invalid Input.")
 
-        validate_process_three = True
+    def save_to_file(self):
+        pass
 
-        while validate_process_three:
-            password_input = input("""
-                                Username must contain capital letters
-                                Username must contain small letters
-                                Username must contain at least 1 number, at least 1 punctuation and must be 8 to 16 alphanumeric - symbol long
-                                Enter your password:
-                    """)
-            try:
-                password = self.validate_user_password(password_input)
-                validate_process_three = False
-            except ValueError:
-                print("Invalid Input.")
+    def load_to_file(self):
+        pass
+
+    def login(self):
+        pass
+
+    def register_for_course(self):
+        pass
+
+    def view_courses(self):
+        pass
+
+    def view_course_grade(self):
+        pass
