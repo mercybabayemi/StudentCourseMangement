@@ -7,7 +7,7 @@ from email_validator import validate_email, EmailNotValidError
 class User:
     def __init__(self, password):
         self.__email = "email"
-        self.__hashed_password = self.__hashed_password(self.validate_user_password(password))
+        self.___password = password
         self.__first_name = "first_name"
         self.__last_name = "last_name"
 
@@ -35,7 +35,11 @@ class User:
     def email(self, value):
         self.__email = self.validate_user_email(value)
 
-    def register(self):
+    @property
+    def passage(self):
+        return self.___password
+
+    def register(self, password):
         raise NotImplementedError("Subclass must implement register method.")
 
     def login(self):
@@ -44,13 +48,19 @@ class User:
     def view_courses(self):
         raise NotImplementedError("Subclass must implement view courses method.")
 
-    def __hashed_password(self, password):
+    def hashed_password(self, password):
         while True:
             try:
                 password_input = self.validate_user_password(password)
                 return bcrypt.hashpw(password_input.encode('utf-8'), bcrypt.gensalt())
             except ValueError:
                 print("Invalid input.")
+                password_input = input("""
+                    Username must contain capital letters
+                    Username must contain small letters
+                    Username must contain at least 1 number, at least 1 punctuation and must be 8 to 16 alphanumeric - symbol long
+                    Enter your password:
+                """)
         
     def validate_user_password(self, password):
         if password is None or not re.fullmatch('[A-Za-z0-9-!$%^&*()_+|~=`{}\[\]:";\'<>?,.\/]{8,16}', password):
@@ -73,8 +83,8 @@ class User:
                 raise EmailNotValidError("Email not valid.")
             return email
 
-    def save_to_file(self):
+    def save_to_file(self, hashed_pass):
         raise NotImplementedError("Subclass must implement save to file method.")
 
-    def load_to_file(self):
+    def load_to_file(self, password):
         raise NotImplementedError("Subclass must implement load to file method.")
