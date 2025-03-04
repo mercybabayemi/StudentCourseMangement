@@ -45,22 +45,25 @@ class TestCourse(unittest.TestCase):
 
     def test_that_courses_is_loaded_from_file(self):
         with open(self.test_file, "w") as file:
-            file.write("Mathematics\n")
-            file.write("Physics\n")
+            file.write("1:Mathematics\n")
+            file.write("2:Physics\n")
 
         self.course_manager.load_courses_from_file()
-        self.assertIn("Mathematics", self.course_manager.courses)
-        self.assertIn("Physics", self.course_manager.courses)
+        self.assertIn("Mathematics", self.course_manager.courses.values())
+        self.assertIn("Physics", self.course_manager.courses.values())
 
     def test_that_when_the_file_is_empty_it_prints_out_an_empty_list(self):
         if os.path.exists(self.test_file):
             os.remove(self.test_file)
         self.course_manager.load_courses_from_file()
-        self.assertEqual(self.course_manager.courses, [])
-
+        self.assertEqual(self.course_manager.courses, {})
 
     def test_that_courses_can_be_viewed(self):
         self.course_manager.add_course("Computer Science")
         self.course_manager.add_course("English")
-        self.assertEqual(["Computer Science","English"], self.course_manager.view_course())
+
+        expected_courses = {1: "Computer Science", 2: "English"}
+        self.assertEqual(expected_courses, self.course_manager.view_course())
+
+
 

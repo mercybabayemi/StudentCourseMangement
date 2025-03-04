@@ -37,7 +37,7 @@ class Course:
         for course_id, course_name in self.courses.items():
             if course_name == input_course:
                 course_id_to_remove = course_id
-                break  # Exit loop once found
+                break
 
         if course_id_to_remove is not None:
             del self.courses[course_id_to_remove]
