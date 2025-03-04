@@ -5,7 +5,7 @@ from user import User
 class MyTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.user_class = User('Mercy','Babayemi','ighoe571@gmail.com',"Password1.")
+        self.user_class = User("Password1.")
 
     def test_validate_user_firstname_given_correct_value_when_registering(self):
         self.assertEqual("Mercy", self.user_class.validate_user_firstname("Mercy"))
@@ -27,6 +27,13 @@ class MyTestCase(unittest.TestCase):
     def test_validate_user_password_given_invalid_input_raise_exception(self):
         with self.assertRaises(ValueError):
             self.user_class.validate_user_password("pass")
+
+    def test_validate_user_email_given_correct_value_when_registering(self):
+        self.assertEqual("mercy@gmail.com", self.user_class.validate_user_email("mercy@gmail.com"))
+
+    def test_validate_user_email_given_invalid_input_raise_exception(self):
+        with self.assertRaises(ValueError):
+            self.user_class.validate_user_email("mercy@gm")
 
 if __name__ == '__main__':
     unittest.main()
