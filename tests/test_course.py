@@ -15,7 +15,7 @@ class TestCourse(unittest.TestCase):
 
     def test_add_course(self):
         self.course_manager.add_course("Mathematics")
-        self.assertIn("Mathematics", self.course_manager.courses)
+        self.assertIn("Mathematics", self.course_manager.courses.values())
 
     def test_add_duplicate_course(self):
         self.course_manager.add_course("Physics")
@@ -26,7 +26,7 @@ class TestCourse(unittest.TestCase):
     def test_remove_course(self):
         self.course_manager.add_course("Computer Science")
         self.course_manager.remove_course("Computer Science")
-        self.assertNotIn("Computer Science", self.course_manager.courses)
+        self.assertNotIn("Computer Science", self.course_manager.courses.values())
 
     def test_that_when_i_remove_nonexistent_course_it_throws_error(self):
         with self.assertRaises(Exception) as context:
@@ -40,8 +40,8 @@ class TestCourse(unittest.TestCase):
 
         with open(self.test_file, "r") as file:
             lines = file.readlines()
-            self.assertIn("Mathematics\n", lines)
-            self.assertIn("Physics\n", lines)
+            self.assertIn("1:Mathematics\n", lines)
+            self.assertIn("2:Physics\n", lines)
 
     def test_that_courses_is_loaded_from_file(self):
         with open(self.test_file, "w") as file:
