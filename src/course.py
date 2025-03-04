@@ -9,13 +9,14 @@ class Course:
         with open("courses.txt", "a") as file:
             for course_id, course_name in self.courses.items():
                 file.write(f"{course_id}:{course_name}\n")
-                self.course_id += 1
 
     def add_course(self, course):
         if course not in self.courses.values():
             self.courses[self.course_id] = course
-            print(self.course_id)
+            print(f"Here is your course id:{self.course_id}")
             self.save_courses_to_file()
+            self.course_id += 1
+
         else:
             raise Exception(f"Course {course} already exists")
 
@@ -27,7 +28,6 @@ class Course:
                     self.courses[int(course_id)] = course_name
                     self.course_id += max(self.courses.keys()) + 1
         except FileNotFoundError:
-            print("No courses file found. Starting with an empty list.")
             self.courses = {}
         except IOError as e:
             print(f"Error loading courses from file: {e}")
@@ -51,6 +51,18 @@ class Course:
 
     def view_course(self):
         return self.courses
+
+    def find_course_using_id(self, id_number):
+        if id_number in self.courses:
+            return self.courses.get(id_number)
+        raise Exception(f"id not not found")
+
+    def find_id_by_course(self, course):
+        for course_id, course_name in self.courses.items():
+            if course_name == course:
+                return course_id
+        raise Exception(f"Course '{course}' not found")
+
 
 
 

@@ -66,4 +66,25 @@ class TestCourse(unittest.TestCase):
         self.assertEqual(expected_courses, self.course_manager.view_course())
 
 
+    def test_that_i_can_remove_course_with_the_id(self):
+        self.course_manager.add_course("Computer Science")
+        self.course_manager.add_course("English")
+        self.course_manager.remove_using_id(2)
+        self.assertNotIn("English", self.course_manager.courses.values())
+
+
+    def test_that_i_can_find_my_course_through_the_id(self):
+        self.course_manager.add_course("Computer Science")
+        self.course_manager.add_course("English")
+        self.course_manager.add_course("physics")
+        self.course_manager.add_course("Mathematics")
+        self.assertEqual("physics",self.course_manager.find_course_using_id(3))
+
+
+    def test_that_i_can_find_my_course_id_by_my_course(self):
+        self.course_manager.add_course("Computer Science")
+        self.course_manager.add_course("English")
+        self.course_manager.add_course("physics")
+        self.assertEqual(3,self.course_manager.find_id_by_course("physics"))
+
 
