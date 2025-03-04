@@ -1,49 +1,85 @@
+import bcrypt
+
 from user import User
 
 class Student(User):
 
-    def register(self):
-        validate_process_one = True
-        firstname = ""
-        lastname = ""
-        password = ""
-        email = ""
-
-        while validate_process_one:
-            firstname_input = input("""
-                                Your firstname cannot be an empty space or contain space character
-                                Enter your firstname:
-                    """)
+    def register(self,password):
+        while True:
             try:
+                self.collect_user_firstname()
+                self.collect_user_lastname()
+                self.collect_user_email()
+
+                self.save_to_file(self.hashed_password(password))
+                print("User registered successfully")
+            except ValueError:
+                print("Invalid Input.")
+            except FileNotFoundError:
+                print("File not found.")
+
+
+    def collect_user_firstname(self):
+        while True:
+            try:
+                firstname_input = input("""
+                    Your firstname cannot be an empty space or contain space character
+                    Enter your firstname:
+                 """)
+
                 firstname = self.validate_user_firstname(firstname_input)
-                validate_process_one = False
+                self.first_name(firstname)
             except ValueError:
-                print("Invalid Input.")
+                print("Invalid firstname.")
 
-        validate_process_two = True
-
-        while validate_process_two:
-            lastname_input = input("""
-                                Your lastname cannot be an empty space or contain space character
-                                Enter your lastname:
-                    """)
+    def collect_user_lastname(self):
+        while True:
             try:
+                lastname_input = input("""
+                    Your lastname cannot be an empty space or contain space character
+                    Enter your lastname:
+                """)
                 lastname = self.validate_user_lastname(lastname_input)
-                validate_process_one = False
+                self.last_name(lastname)
             except ValueError:
-                print("Invalid Input.")
+                print("Invalid lastname.")
 
-        validate_process_three = True
-
-        while validate_process_three:
-            password_input = input("""
-                                Username must contain capital letters
-                                Username must contain small letters
-                                Username must contain at least 1 number, at least 1 punctuation and must be 8 to 16 alphanumeric - symbol long
-                                Enter your password:
-                    """)
+    def collect_user_email(self):
+        while True:
             try:
-                password = self.validate_user_password(password_input)
-                validate_process_three = False
+                email_input = input("""
+                    Enter a valid email address:
+                """)
+                email = self.validate_user_email(email_input)
+                self.email(email)
             except ValueError:
-                print("Invalid Input.")
+                print("Invalid email.")
+
+    def save_to_file(self, hashed_pass):
+        with open("student_details.txt", 'a') as file:
+            file.write(f'{self.first_name}:{self.last_name}:{self.email}:{hashed_pass.decode('utf-8')}')
+
+    def load_to_file(self, password):
+        try:
+            with open("student_details.txt", 'r') as file:
+                for line in file:
+                    data = file.read().strip().split(':')
+                    stored_firstname, stored_lastname, stored_email, stored_password = data[0], data[1], data[2], data[3]
+                    if self.passage == stored_password:
+                        return bcrypt.checkpw(password.encode('utf-8'), stored_password.encode('utf-8'))
+        except FileNotFoundError:
+            print("File not found.")
+        except ValueError:
+            print("Invalid email or password")
+
+    def login(self):
+        pass
+
+    def register_for_course(self):
+        pass
+
+    def view_courses(self):
+        pass
+
+    def view_course_grade(self):
+        pass
