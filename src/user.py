@@ -5,11 +5,11 @@ import bcrypt
 from email_validator import validate_email, EmailNotValidError
 
 class User:
-    def __init__(self):
-        self.__email = "email"
-        self.__hashed_password = self.__hashed_password("password")
-        self.__first_name = "first_name"
-        self.__last_name = "last_name"
+    def __init__(self,first_name,last_name,email,password):
+        self.__email = email
+        self.__hashed_password = self.__hashed_password(password)
+        self.__first_name = first_name
+        self.__last_name = last_name
 
     @property
     def first_name(self):
@@ -73,3 +73,8 @@ class User:
             return email
         except EmailNotValidError as e:
             print("Email not valid.")
+
+    def verify_password(self, password):
+        if bcrypt.checkpw(bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()),self.__hashed_password):
+            return True
+        return False

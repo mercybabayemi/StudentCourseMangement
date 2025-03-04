@@ -5,7 +5,7 @@ from user import User
 class MyTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.user_class = User()
+        self.user_class = User('Mercy','Babayemi','ighoe571@gmail.com',"Password1.")
 
     def test_validate_user_firstname_given_correct_value_when_registering(self):
         self.assertEqual("Mercy", self.user_class.validate_user_firstname("Mercy"))
