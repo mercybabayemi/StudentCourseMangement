@@ -1,8 +1,32 @@
 import unittest
 
+from user import User
+
 class MyTestCase(unittest.TestCase):
-    def test_something(self):
-        self.assertEqual(True, False)  # add assertion here
+
+    def setUp(self):
+        self.user_class = User()
+
+    def test_validate_user_firstname_given_correct_value_when_registering(self):
+        self.assertEqual("Mercy", self.user_class.validate_user_firstname("Mercy"))
+
+    def test_validate_user_firstname_given_invalid_input_raise_exception(self):
+        with self.assertRaises(ValueError):
+            self.user_class.validate_user_firstname("M Er")
+
+    def test_validate_user_lastname_given_correct_value_when_registering(self):
+        self.assertEqual("Babayemi", self.user_class.validate_user_lastname("Babayemi"))
+
+    def test_validate_user_lastname_given_invalid_input_raise_exception(self):
+        with self.assertRaises(ValueError):
+            self.user_class.validate_user_firstname(" ")
+
+    def test_validate_user_password_success_given_correct_value_when_registering_user(self):
+        self.assertEqual("Password1.", self.user_class.validate_user_password("Password1."))
+
+    def test_validate_user_password_given_invalid_input_raise_exception(self):
+        with self.assertRaises(ValueError):
+            self.user_class.validate_user_password("pass")
 
 if __name__ == '__main__':
     unittest.main()

@@ -2,11 +2,12 @@ import re
 
 import bcrypt
 
+from email_validator import validate_email, EmailNotValidError
 
 class User:
     def __init__(self):
         self.__email = "email"
-        self.__password = "password"
+        self.__hashed_password = self.__hashed_password("password")
         self.__first_name = "first_name"
         self.__last_name = "last_name"
 
@@ -15,64 +16,60 @@ class User:
         return self.__first_name
 
     @first_name.setter
-    def first_name(self, name):
-        self.__first_name = name
+    def first_name(self, value):
+        self.__first_name = self.validate_user_firstname(value)
 
     @property
     def last_name(self):
         return self.__last_name
 
     @last_name.setter
-    def last_name(self, name):
-        self.__last_name = name
+    def last_name(self, value):
+        self.__last_name = self.validate_user_lastname(value)
 
     @property
     def email(self):
         return self.__email
 
     @email.setter
-    def email(self, email):
-        self.__email = email
-
-    def hashed_password(self, password):
-        return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    def email(self, value):
+        self.__email = self.validate_user_email(value)
 
     def register(self):
-        validate_process_one = True
+        raise NotImplementedError("Subclass must implement register method.")
 
-        while validate_process_one:
-            firstname_input = input("""
-                                Your first name cannot be an empty space or contain space character
-                                Enter your first:
-                    """)
+    def login(self):
+        raise NotImplementedError("Subclass must implement login method.")
+
+    def view_courses(self):
+        raise NotImplementedError("Subclass must implement view courses method.")
+
+    def __hashed_password(self, password):
+        while True:
             try:
-                self.validate_user_firstname(firstname_input)
-                validate_process_one = False
+                password_input = self.validate_user_password(password)
+                return bcrypt.hashpw(password_input.encode('utf-8'), bcrypt.gensalt())
             except ValueError:
-                print("Invalid Input.")
-
-        validate_process_two = True
-
-        while validate_process_two:
-            password_input = input("""
-                                Username must contain capital letters
-                                Username must contain small letters
-                                Username must contain at least 1 number, at least 1 punctuation and must be 8 alphanumeric - symbol long
-                                Enter your password:
-                    """)
-            try:
-                self.validate_user_password(password_input)
-                validate_process_one = False
-            except ValueError:
-                print("Invalid Input.")
-
-
+                print("Invalid input.")
+        
     def validate_user_password(self, password):
-        password_is_correct = password is not None and re.fullmatch('[A-Za-z0-9-!$%^&*()_+|~=`{}\[\]:";\'<>?,.\/]{8}')
-
-        if not password_is_correct:
+        if password is None or not re.fullmatch('[A-Za-z0-9-!$%^&*()_+|~=`{}\[\]:";\'<>?,.\/]{8,16}', password):
             raise ValueError("Invalid password.")
-
-
+        return password
+    
     def validate_user_firstname(self, firstname):
-        firstname_is_correct = firstname is not None and re.fullmatch('\S+')
+        if firstname is None or not re.fullmatch('[a-zA-Z]+', firstname):
+            raise  ValueError("Invalid firstname.")
+        return firstname
+
+    def validate_user_lastname(self, lastname):
+        if lastname is None or not re.fullmatch('[a-zA-Z]+', lastname):
+            raise ValueError("Invalid lastname.")
+        return lastname
+
+    def validate_user_email(self, value):
+        try:
+            email = validate_email(value)
+            return email
+        except EmailNotValidError as e:
+            print("Email not valid.")
