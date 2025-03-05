@@ -1,3 +1,5 @@
+from typing import override
+
 import bcrypt
 
 from user import User
@@ -7,6 +9,7 @@ class Student(User):
         super().__init__(password)
         self.enrolled_courses = []
         self.grades = {}
+
 
     def register(self,first_name,last_name,email,password):
         try:
@@ -20,7 +23,6 @@ class Student(User):
 
     def login(self, email, password):
         if self.load_from_file(password, email):
-            print("Login successful.")
             return True
         else:
             print("Invalid email or password.")
@@ -65,6 +67,18 @@ class Student(User):
                             return True
         except FileNotFoundError:
             print("File not found.")
-        except ValueError:
-            print("Invalid email or password.")
-        return False
+
+
+
+    def verify_email_in_file(self, email):
+        with open("student_details.txt", 'r') as file:
+            for line in file:
+                data = line.strip().split(':')
+                stored_firstname, stored_lastname, stored_email, stored_password = data[0], data[1], data[2], data[3]
+                if email == stored_email:
+                    return True
+
+            return False
+
+
+

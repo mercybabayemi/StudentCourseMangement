@@ -9,6 +9,7 @@ class StudentManagementSystem:
         self.courses = Course()
         self.grades = []
 
+
     def register_student(self, first_name, last_name, email, password):
         student = Student(password)
         student.register(first_name, last_name, email, password)
@@ -20,7 +21,7 @@ class StudentManagementSystem:
         professor.first_name = first_name
         professor.last_name = last_name
         professor.email = email
-        professor.register(password)
+        professor.register(first_name, last_name, email, password)
         self.professors.append(professor)
         print(f"Professor {first_name} {last_name} registered successfully.")
 
@@ -51,17 +52,19 @@ class StudentManagementSystem:
         for grade in student_grades:
             print(grade)
 
-    def view_course_students(self, course_name):
-        if course_name not in self.courses.courses:
-            print("Course not found.")
+    def view_course(self):
+        if not self.courses:
+            print("No courses available.")
             return
-        students_in_course = [student for student in self.students if course_name in student.enrolledCourses]
-        if not students_in_course:
-            print("No students enrolled in this course.")
-            return
-        for student in students_in_course:
-            print(f"Student: {student.first_name} {student.last_name}, Email: {student.email}")
 
+        courses = self.courses.view_course()
+
+        if not courses:
+            print("No courses found.")
+            return
+
+        for course in courses:
+            print(f"- {course}")
 
     def login_in_student(self,email,password):
         try:
@@ -69,6 +72,14 @@ class StudentManagementSystem:
             student.login(email,password)
         except Exception as e:
             print(e)
-        except ValueError as e:
-            print(e)
+
+
+    def verify_role(self,password,email):
+        student = Student(password)
+        return student.verify_email_in_file(email)
+
+
+
+
+
 
