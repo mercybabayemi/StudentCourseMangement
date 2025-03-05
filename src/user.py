@@ -1,8 +1,8 @@
 import re
 
 import bcrypt
+from email_validator import EmailNotValidError
 
-from email_validator import validate_email, EmailNotValidError
 
 class User:
     def __init__(self, password):
@@ -61,15 +61,15 @@ class User:
                     Username must contain at least 1 number, at least 1 punctuation and must be 8 to 16 alphanumeric - symbol long
                     Enter your password:
                 """)
-        
+
     def validate_user_password(self, password):
-        if password is None or not re.fullmatch('[A-Za-z0-9-!$%^&*()_+|~=`{}\[\]:";\'<>?,.\/]{8,16}', password):
+        if password is None or not re.fullmatch(r'[A-Za-z0-9\-!$%^&*()_+|~=`{}\[\]:";\'<>?,.\/]{8,16}', password):
             raise ValueError("Invalid password.")
         return password
-    
+
     def validate_user_firstname(self, firstname):
         if firstname is None or not re.fullmatch('[a-zA-Z]+', firstname):
-            raise  ValueError("Invalid firstname.")
+            raise ValueError("Invalid firstname.")
         return firstname
 
     def validate_user_lastname(self, lastname):
@@ -77,14 +77,59 @@ class User:
             raise ValueError("Invalid lastname.")
         return lastname
 
-    def validate_user_email(self, value):
-            email = validate_email(value)
-            if not email:
-                raise EmailNotValidError("Email not valid.")
-            return email
+    def validate_user_email(self, email):
+        if email is None or not re.match(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", email):
+            raise ValueError("Invalid email")  # Raise the exception
+        return email
 
     def save_to_file(self, hashed_pass):
         raise NotImplementedError("Subclass must implement save to file method.")
 
-    def load_to_file(self, password):
+    def load_from_file(self, password, email):
         raise NotImplementedError("Subclass must implement load to file method.")
+
+    def collect_user_password(self):
+            try:
+                password_input = input("""
+                 Username must contain capital letters
+                 Username must contain small letters
+                 Username must contain at least 1 number, at least 1 punctuation and must be 8 to 16 alphanumeric - symbol long
+                 Enter your password:
+                 """)
+                password = self.validate_user_password(password_input)
+                return password
+            except ValueError as e:
+                print("Invalid password.")
+
+    def collect_user_firstname(self):
+            try:
+                firstname_input = input("""
+                     Your firstname cannot be an empty space or contain space character
+                     Enter your firstname:
+                  """)
+
+                firstname = self.validate_user_firstname(firstname_input)
+                return firstname
+            except ValueError:
+                print("Invalid firstname.")
+
+    def collect_user_lastname(self):
+            try:
+                lastname_input = input("""
+                     Your lastname cannot be an empty space or contain space character
+                     Enter your lastname:
+                 """)
+                lastname = self.validate_user_lastname(lastname_input)
+                return lastname
+            except ValueError:
+                print("Invalid lastname.")
+
+    def collect_user_email(self):
+        try:
+            email_input = input("""
+                     Enter a valid email address:
+                 """)
+            email = self.validate_user_email(email_input)
+            return email
+        except ValueError:
+            print("Invalid email.")
