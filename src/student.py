@@ -11,11 +11,11 @@ class Student(User):
     def register(self,password):
         try:
             firstname_collected = self.collect_user_firstname()
-            self.first_name(firstname_collected)
+            self.first_name = firstname_collected
             lastname_collected = self.collect_user_lastname()
-            self.last_name(lastname_collected)
+            self.last_name = lastname_collected
             email_collected = self.collect_user_email()
-            self.email(email_collected)
+            self.email = email_collected
             self.save_to_file(self.hashed_password(password))
             print("User registered successfully")
         except ValueError as e:
