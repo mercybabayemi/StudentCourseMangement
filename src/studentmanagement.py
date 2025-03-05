@@ -1,7 +1,6 @@
 from student import Student
 from professor import Professor
 from course import Course
-from grade import Grade
 
 class StudentManagementSystem:
     def __init__(self):
@@ -12,10 +11,7 @@ class StudentManagementSystem:
 
     def register_student(self, first_name, last_name, email, password):
         student = Student(password)
-        student.first_name = first_name
-        student.last_name = last_name
-        student.email = email
-        student.register(password)
+        student.register(first_name, last_name, email, password)
         self.students.append(student)
         print(f"Student {first_name} {last_name} registered successfully.")
 
@@ -67,5 +63,12 @@ class StudentManagementSystem:
             print(f"Student: {student.first_name} {student.last_name}, Email: {student.email}")
 
 
-    #def login_in_student(self,email,password):
-        #if
+    def login_in_student(self,email,password):
+        try:
+            student = Student(password)
+            student.login(email,password)
+        except Exception as e:
+            print(e)
+        except ValueError as e:
+            print(e)
+

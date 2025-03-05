@@ -30,7 +30,6 @@ def main():
                     password = input("Password: ")
                     #student_id = input("Student ID: ")
                     student_grade.register_student(first_name, last_name, email, password)
-                    print(f"Student {first_name} {last_name} registered successfully.")
 
                 case '2':
                     print("-- Register Professor --")
@@ -47,21 +46,24 @@ def main():
 
                 case '3':
                     print("\n-- Login --")
-                    email = input("Email: ")
+                    email = input("Enter your Email: ")
                     password = input("Password: ")
                     try:
-                        logged_in_user = student_grade.login_user(email, password)
-                        print("Login successful. Welcome,", logged_in_user.name + "!")
+                        student_grade.login_in_student(email, password)
+                        print("Login successful.")
                     except Exception as e:
                         print("Error:", e)
 
 
                 case '4':
                     print("Exiting... Goodbye!\nThanks for using this app")
-                    break
+                    return
+
+        except Exception as e:
+            print(e)
 
 
 
 
-if __name__ == "_main_":
+if __name__ == "__main__":
     main()
