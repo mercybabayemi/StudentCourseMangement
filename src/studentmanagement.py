@@ -63,8 +63,8 @@ class StudentManagementSystem:
             print("No courses found.")
             return
 
-        for course in courses.values():
-            print(f"- {course}")
+        for course_id,course in courses.items():
+            print(f"- Here is the course id:{course_id} and course:{course}")
 
     def login_in_student(self,email,password):
         try:
@@ -89,6 +89,9 @@ class StudentManagementSystem:
             self.courses.remove_course(course)
         except Exception as e:
             print(e)
+
+    def find_course_id(self,id_number):
+        return self.courses.find_course_using_id(id_number)
 
 
 
