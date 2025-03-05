@@ -59,7 +59,7 @@ class Professor(User):
 
     def save_to_file(self, hashed_pass):
         with open("professor_details.txt", 'a') as file:
-            file.write(f'{self.first_name}:{self.last_name}:{self.email}:{hashed_pass.decode('utf-8')}')
+            file.write(f'{self.first_name}:{self.last_name}:{self.email}:{hashed_pass.decode("utf-8")}\n')
 
     def load_from_file(self, password, email):
         try:

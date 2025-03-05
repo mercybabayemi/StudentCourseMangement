@@ -1,7 +1,6 @@
 import re
 
 import bcrypt
-from email_validator import EmailNotValidError
 
 
 class User:
