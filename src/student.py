@@ -3,7 +3,7 @@ import bcrypt
 from user import User
 
 class Student(User):
-    def __init__(self, password):
+    def __init__(self,password):
         super().__init__(password)
         self.enrolled_courses = []
         self.grades = {}

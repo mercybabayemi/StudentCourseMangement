@@ -5,7 +5,7 @@ from user import User
 
 class Professor(User):
     def __init__(self, password):
-        super().__init__(password)
+        super().__init__()
         self.courses = course.Course()
 
     def register(self,password):
@@ -42,7 +42,7 @@ class Professor(User):
             print("You are not teaching any courses.")
         else:
             print("Your teaching courses:")
-            for particular_course in self.courses.courses:
+            for particular_course in self.courses.courses.values():
                 print(f"- {particular_course}")
 
     def login(self):
