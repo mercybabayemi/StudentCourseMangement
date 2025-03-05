@@ -18,12 +18,13 @@ def student_menu():
             --- Student Menu ---
             1. View courses
             2. Enroll in a course
-            3. View Grade
-            4. find course with id
-            5. find course id with course name
-            6. Log out
+            3. view Enrolled courses
+            4. View Grade
+            5. find course with id
+            6. find course id with course name
+            7. Log out
         """)
-        choice = input("Enter your choice 1- 4: ").strip()
+        choice = input("Enter your choice 1- 7: ").strip()
 
         match choice:
             case '1':
@@ -32,12 +33,14 @@ def student_menu():
                     course = input("Enter course : ")
                     manager.enroll_course(course)
             case '3':
-                print("Fetching grades...")
+                manager.view_enrolled_courses()
             case '4':
                 id_number = int(input("Enter course id number: "))
                 course = manager.find_course_id(id_number)
                 print(f"Here is the course: {course}")
-            case '6':
+            case '5':
+                manager.view_grade()
+            case '7':
                 print("Logging out...\n")
                 break
             case _:

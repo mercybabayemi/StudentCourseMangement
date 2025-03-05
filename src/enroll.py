@@ -38,3 +38,6 @@ class Enrollment:
         except FileNotFoundError:
             Enrollment.enrolled_courses = []
 
+    def view_enroll_courses(self):
+        return self.enrolled_courses
+

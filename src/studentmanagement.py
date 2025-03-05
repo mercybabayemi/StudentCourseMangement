@@ -103,6 +103,14 @@ class StudentManagementSystem:
     def find_course_id(self,id_number):
         return self.courses.find_course_using_id(id_number)
 
+    def view_enrolled_courses(self):
+        enrolled_courses = self.roll.view_enroll_courses()
+        for course in enrolled_courses:
+            print(f"- {course}")
+
+    def view_grade(self):
+
+
 
 
 
