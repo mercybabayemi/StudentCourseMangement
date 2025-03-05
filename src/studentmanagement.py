@@ -48,7 +48,7 @@ class StudentManagementSystem:
         # print(f"Grade {grade} assigned to {student_email} for {course_name}.")
 
     def view_student_grades(self, student_email):
-        student_grades = [g for g in self.grades if g.student == student_email]
+        student_grades = [grade for grade in self.grades if grade.student == student_email]
         if not student_grades:
             print("No grades found for this student.")
             return
@@ -59,7 +59,7 @@ class StudentManagementSystem:
         if course_name not in self.courses.courses:
             print("Course not found.")
             return
-        students_in_course = [s for s in self.students if course_name in s.enrolledCourses]
+        students_in_course = [student for student in self.students if course_name in student.enrolledCourses]
         if not students_in_course:
             print("No students enrolled in this course.")
             return
