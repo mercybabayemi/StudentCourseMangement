@@ -16,7 +16,7 @@ class Enrollment:
             print(f"You are already enrolled in {course}.")
             self.save_enrolled_courses()
         else:
-            print("Invalid course ID. Please select a valid course.")
+            raise Exception("Invalid course . Please select a valid course.")
 
 
     def unenroll(self,course):
@@ -26,9 +26,9 @@ class Enrollment:
 
 
     def save_enrolled_courses(self):
-        with open("enrolled_courses.txt", "a") as file:
-            for line in file:
-                file.write(f"{line}\n")
+        with open("enrolled_courses.txt", "a") as file:  # Use "w" to overwrite
+            for course in self.enrolled_courses:
+                file.write(f"{course}\n")
 
 
     def load_enrolled_courses(self):

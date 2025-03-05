@@ -20,7 +20,11 @@ class StudentManagementSystem:
         print(f"Student {first_name} {last_name} registered successfully.")
 
     def enroll_course(self,course):
-        self.roll.enroll(course)
+        try:
+            self.roll.enroll(course)
+        except Exception as e:
+            print(e)
+
 
     def register_professor(self, first_name, last_name, email, password):
         professor = Professor(password)
