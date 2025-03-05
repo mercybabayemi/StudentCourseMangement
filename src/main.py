@@ -1,3 +1,5 @@
+import re
+
 from studentmanagement import StudentManagementSystem
 
 def print_menu():
@@ -27,8 +29,8 @@ def student_menu():
             case '1':
                 manager.view_course()
             case '2':
-                course = input("Enter course name to enroll: ")
-                print(f"Enrolling in {course}...")
+                    course = input("Enter course : ")
+                    manager.enroll_course(course)
             case '3':
                 print("Fetching grades...")
             case '4':

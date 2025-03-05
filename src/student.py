@@ -1,5 +1,3 @@
-from typing import override
-
 import bcrypt
 
 from user import User

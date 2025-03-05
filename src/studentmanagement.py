@@ -1,6 +1,8 @@
+from enroll import Enrollment
 from student import Student
 from professor import Professor
 from course import Course
+from enroll import Enrollment
 
 class StudentManagementSystem:
     def __init__(self):
@@ -8,6 +10,7 @@ class StudentManagementSystem:
         self.professors = []
         self.courses = Course()
         self.grades = []
+        self.roll = Enrollment()
 
 
     def register_student(self, first_name, last_name, email, password):
@@ -15,6 +18,9 @@ class StudentManagementSystem:
         student.register(first_name, last_name, email, password)
         self.students.append(student)
         print(f"Student {first_name} {last_name} registered successfully.")
+
+    def enroll_course(self,course):
+        self.roll.enroll(course)
 
     def register_professor(self, first_name, last_name, email, password):
         professor = Professor(password)
