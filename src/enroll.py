@@ -26,7 +26,7 @@ class Enrollment:
 
 
     def save_enrolled_courses(self):
-        with open("enrolled_courses.txt", "a") as file:  # Use "w" to overwrite
+        with open("enrolled_courses.txt", "a") as file:
             for course in self.enrolled_courses:
                 file.write(f"{course}\n")
 
