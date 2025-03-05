@@ -3,6 +3,7 @@ import bcrypt
 import course
 from user import User
 
+
 class Professor(User):
     def __init__(self, password):
         super().__init__(password)
