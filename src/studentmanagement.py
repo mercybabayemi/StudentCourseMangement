@@ -67,5 +67,5 @@ class StudentManagementSystem:
             print(f"Student: {student.first_name} {student.last_name}, Email: {student.email}")
 
 
-    def login_in_student(self,email,password):
-        if
+    #def login_in_student(self,email,password):
+        #if
