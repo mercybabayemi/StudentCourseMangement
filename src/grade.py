@@ -13,3 +13,4 @@ class Grade:
 
     def view_grade(self):
         print(f"{self.course.course_name}: {self.numeric_grade} ({self.letter_grade.name})")
+        #
