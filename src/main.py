@@ -19,7 +19,7 @@ def student_menu():
             3. View Grade
             4. Log out
         """)
-        choice = input("Enter your choice: ").strip()
+        choice = input("Enter your choice 1- 4: ").strip()
 
         match choice:
             case '1':
@@ -34,11 +34,29 @@ def student_menu():
                 break  # Exit student menu
             case _:
                 print("Invalid option. Please select a valid option (1-4).")
+                choice = input("Enter your choice 1-4: ").strip()
 
 
 
 def teacher_menu():
-    pass
+    manger = StudentManagementSystem()
+    while True:
+        print("""
+            --- Teacher Menu ---
+            1. Add course
+            2. Remove course
+            3. 
+            4. Log out
+        """)
+        choice = input("Enter your choice 1- 4: ").strip()
+        match choice:
+            case '1':
+                course = input("Enter course name: ")
+                manger.add_course(course)
+            case '2':
+                course = input("Enter course name: ")
+                manger.remove_course(course)
+
 
 
 def main():

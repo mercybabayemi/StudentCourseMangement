@@ -63,7 +63,7 @@ class StudentManagementSystem:
             print("No courses found.")
             return
 
-        for course in courses:
+        for course in courses.values():
             print(f"- {course}")
 
     def login_in_student(self,email,password):
@@ -77,6 +77,18 @@ class StudentManagementSystem:
     def verify_role(self,password,email):
         student = Student(password)
         return student.verify_email_in_file(email)
+
+    def add_course(self,course_name):
+        try:
+            self.courses.add_course(course_name)
+        except Exception as e:
+            print(e)
+
+    def remove_course(self, course):
+        try:
+            self.courses.remove_course(course)
+        except Exception as e:
+            print(e)
 
 
 
