@@ -17,7 +17,7 @@ class Student(User):
             email_collected = self.collect_user_email()
             self.email = email_collected
             self.save_to_file(self.hashed_password(password))
-            print("User registered successfully")
+            print("Student registered successfully")
         except ValueError as e:
             print(f"Error during registration: {e}")
         except FileNotFoundError:

@@ -16,7 +16,6 @@ class Course:
             print(f"Here is your course id:{self.course_id}")
             self.save_courses_to_file()
             self.course_id += 1
-
         else:
             raise Exception(f"Course {course} already exists")
 
@@ -55,7 +54,7 @@ class Course:
     def find_course_using_id(self, id_number):
         if id_number in self.courses:
             return self.courses.get(id_number)
-        raise Exception(f"id not not found")
+        raise Exception(f"{id_number} not not found")
 
     def find_id_by_course(self, course):
         for course_id, course_name in self.courses.items():
