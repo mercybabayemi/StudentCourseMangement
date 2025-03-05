@@ -58,7 +58,6 @@ class TestCourse(unittest.TestCase):
         self.course_manager.load_courses_from_file()
         self.assertEqual(self.course_manager.courses, [])
 
-
     def test_that_courses_can_be_viewed(self):
         self.course_manager.add_course("Computer Science")
         self.course_manager.add_course("English")
