@@ -7,6 +7,7 @@ class Professor(User):
     def __init__(self, password):
         super().__init__(password)
         self.courses = course.Course()
+        #
 
     def register(self,password):
         try:
