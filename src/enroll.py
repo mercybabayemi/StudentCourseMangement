@@ -19,7 +19,7 @@ class Enrollment:
             raise Exception("Invalid course . Please select a valid course.")
 
 
-    def unenroll(self,course):
+    def un_enroll(self,course):
         if course in self.enrolled_courses:
             self.enrolled_courses.remove(course)
             self.save_enrolled_courses()
