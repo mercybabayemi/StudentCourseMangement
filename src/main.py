@@ -1,9 +1,4 @@
-import re
-
 from studentmanagement import StudentManagementSystem
-
-from exception import UserNotFoundException,CourseNotFoundException,GradeOutOfRangeException
-
 
 
 def print_menu():
@@ -46,7 +41,7 @@ def student_menu():
                 print(f"Here is the course: {course}")
             case '6':
                 print("You caught us on this one. Working on it")
-                #manager.view_grade()
+                manager.view_grade()
             case '7':
                 print("Logging out...\n")
                 break
@@ -121,7 +116,6 @@ def main():
                     #student_id = input("Student ID: ")
                     try:
                        student_grade.register_professor(first_name, last_name, email, password)
-                       print(f"Professor {first_name} {last_name} registered successfully.")
                     except Exception as e:
                         print(e)
 

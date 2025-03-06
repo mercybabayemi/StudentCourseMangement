@@ -32,21 +32,27 @@ class StudentManagementSystem:
 
 
     def register_professor(self, first_name, last_name, email, password):
-        professor = Professor(password)
-        professor.first_name = first_name
-        professor.last_name = last_name
-        professor.email = email
-        professor.register(first_name, last_name, email, password)
-        self.professors.append(professor)
-        print(f"Professor {first_name} {last_name} registered successfully.")
+        try:
+            professor = Professor(password)
+            professor.first_name = first_name
+            professor.last_name = last_name
+            professor.email = email
+            professor.register(first_name, last_name, email, password)
+            self.professors.append(professor)
+            print(f"Professor {first_name} {last_name} registered successfully.")
+        except Exception as e:
+            print(e)
 
     def create_course(self, course_name):
-        if not self.professors:
-            print("No professors available to create a course.")
-            return
-        professor = self.professors[0]
-        professor.add_course(course_name)
-        print(f"Course {course_name} created successfully.")
+        try:
+            if not self.professors:
+                print("No professors available to create a course.")
+                return
+            professor = self.professors[0]
+            professor.add_course(course_name)
+            print(f"Course {course_name} created successfully.")
+        except Exception as e:
+            print(e)
 
     def assign_grade(self, student_email, course_name, grade):
         student = next((student for student in self.students if student.email == student_email), None)
@@ -68,18 +74,21 @@ class StudentManagementSystem:
             print(grade)
 
     def view_course(self):
-        if not self.courses:
-            print("No courses available.")
-            return
+        try:
+            if not self.courses:
+                print("No courses available.")
+                return
 
-        courses = self.courses.view_course()
+            courses = self.courses.view_course()
 
-        if not courses:
-            print("No courses found.")
-            return
+            if not courses:
+                print("No courses found.")
+                return
 
-        for course_id,course in courses.items():
-            print(f"- Here is the course id:{course_id} and course:{course}")
+            for course_id,course in courses.items():
+                print(f"- Here is the course id:{course_id} and course:{course}")
+        except Exception as e:
+            print(e)
 
     def login_in_student(self,email,password):
         try:
@@ -103,12 +112,18 @@ class StudentManagementSystem:
             print(e)
 
     def find_course_id(self,id_number):
-        return self.courses.find_course_using_id(id_number)
+        try:
+            return self.courses.find_course_using_id(id_number)
+        except Exception as e:
+            print(e)
 
     def view_enrolled_courses(self):
-        enrolled_courses = self.roll.view_enroll_courses()
-        for course in enrolled_courses:
-            print(f"- {course}")
+        try:
+            enrolled_courses = self.roll.view_enroll_courses()
+            for course in enrolled_courses:
+                print(f"- {course}")
+        except Exception as e:
+            print(e)
 
     def grade_student(self,course,student,grade):
         grades = Grade(course,student, grade)
