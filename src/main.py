@@ -56,7 +56,7 @@ def teacher_menu():
             --- Teacher Menu ---
             1. Add course
             2. Remove course
-            3. 
+            3. Grade Students
             4. Log out
         """)
         choice = input("Enter your choice 1- 4: ").strip()
@@ -67,6 +67,25 @@ def teacher_menu():
             case '2':
                 course = input("Enter course name: ")
                 manger.remove_course(course)
+            case '3':
+                students = manger.get_students()  # Get the list of students
+                for student in students:  # Iterate over each student
+                    if not student.courses:  # Check if the student is enrolled in any courses
+                        print(f"Student {student.name} is not enrolled in any courses.")
+                        continue
+
+                    for course in student.courses:  # Iterate over each course the student is enrolled in
+                        try:
+                            # Prompt the user to enter a numeric grade for the student in the specific course
+                            grade = float(input(f"Enter {student.name}'s score for {course.course_name}: "))
+
+                            # Assign the grade using the grade_student method
+                            manger.grade_student(course, student, grade)
+
+                            # Provide feedback to the user
+                            print(f"Grade recorded for {student.name} in {course.course_name}: {grade}")
+                        except ValueError:
+                            print("Invalid input. Please enter a numeric value for the grade.")
 
 
 
@@ -77,8 +96,8 @@ def main():
             print_menu()
             choice = input("Enter your choice (1-4): ").strip()
 
-            while choice not in ['1', '2', '3', '4', '5', '6', '7', '8', '9']:
-                print("Invalid menu option. Please select a valid option (1-9).")
+            while choice not in ['1', '2', '3', '4']:
+                print("Invalid menu option. Please select a valid option (1-4).")
                 choice = input("Enter your choice (1-9): ").strip()
 
             match choice:
@@ -118,7 +137,6 @@ def main():
                             
                         else:
                             teacher_menu()
-                        
                     except Exception as e:
                         print("Error:", e)
 

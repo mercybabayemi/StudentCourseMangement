@@ -1,4 +1,4 @@
-from enroll import Enrollment
+from grade import Grade
 from student import Student
 from professor import Professor
 from course import Course
@@ -9,8 +9,11 @@ class StudentManagementSystem:
         self.students = []
         self.professors = []
         self.courses = Course()
-        self.grades = []
+        self.grades = {}
         self.roll = Enrollment()
+
+    def get_students(self):
+        return self.students
 
 
     def register_student(self, first_name, last_name, email, password):
@@ -108,7 +111,10 @@ class StudentManagementSystem:
         for course in enrolled_courses:
             print(f"- {course}")
 
-    def view_grade(self):
+    def grade_student(self,course,student,grade):
+        grades = Grade(course,student, grade)
+
+
 
 
 
