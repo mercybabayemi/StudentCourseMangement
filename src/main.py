@@ -39,7 +39,7 @@ def student_menu():
                 course = manager.find_course_id(id_number)
                 print(f"Here is the course: {course}")
             case '5':
-                manager.view_grade()
+                manager.view_student_grades()
             case '7':
                 print("Logging out...\n")
                 break
@@ -68,21 +68,18 @@ def teacher_menu():
                 course = input("Enter course name: ")
                 manger.remove_course(course)
             case '3':
-                students = manger.get_students()  # Get the list of students
-                for student in students:  # Iterate over each student
-                    if not student.courses:  # Check if the student is enrolled in any courses
+                students = manger.get_students()
+                for student in students:
+                    if not student.courses:
                         print(f"Student {student.name} is not enrolled in any courses.")
                         continue
 
-                    for course in student.courses:  # Iterate over each course the student is enrolled in
+                    for course in student.courses:
                         try:
-                            # Prompt the user to enter a numeric grade for the student in the specific course
                             grade = float(input(f"Enter {student.name}'s score for {course.course_name}: "))
 
-                            # Assign the grade using the grade_student method
                             manger.grade_student(course, student, grade)
 
-                            # Provide feedback to the user
                             print(f"Grade recorded for {student.name} in {course.course_name}: {grade}")
                         except ValueError:
                             print("Invalid input. Please enter a numeric value for the grade.")

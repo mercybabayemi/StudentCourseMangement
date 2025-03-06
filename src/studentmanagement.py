@@ -9,7 +9,7 @@ class StudentManagementSystem:
         self.students = []
         self.professors = []
         self.courses = Course()
-        self.grades = {}
+        self.grades = []
         self.roll = Enrollment()
 
     def get_students(self):
@@ -54,8 +54,8 @@ class StudentManagementSystem:
         if course_name not in self.courses.courses:
             print("Course not found.")
             return
-        # self.grades.append(Grade(student_email, course_name, grade))
-        # print(f"Grade {grade} assigned to {student_email} for {course_name}.")
+        self.grades.append(Grade(student_email, course_name, grade))
+        print(f"Grade {grade} assigned to {student_email} for {course_name}.")
 
     def view_student_grades(self, student_email):
         student_grades = [grade for grade in self.grades if grade.student == student_email]
