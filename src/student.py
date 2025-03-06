@@ -23,7 +23,6 @@ class Student(User):
         if self.load_from_file(password, email):
             return True
         else:
-            print("Invalid email or password.")
             return False
 
     def register_for_course(self, course_name):
@@ -65,6 +64,7 @@ class Student(User):
                             return True
         except FileNotFoundError:
             print("File not found.")
+            return False
 
 
 

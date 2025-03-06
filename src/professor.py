@@ -52,7 +52,7 @@ class Professor(User):
 
     def save_to_file(self):
         hashed_password = bcrypt.hashpw(self.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-        with open("professor_detail.txt", 'a') as file:
+        with open("professor_details.txt", 'a') as file:
             file.write(f'{self.first_name}:{self.last_name}:{self.email}:{hashed_password}\n')
 
     def load_from_file(self, password, email):
@@ -77,7 +77,7 @@ class Professor(User):
             for line in file:
                 data = line.strip().split(':')
                 stored_firstname, stored_lastname, stored_email, stored_password = data[0], data[1], data[2], data[3]
-                if self.email == stored_email:
+                if email == stored_email:
                     if bcrypt.checkpw(password.encode("utf-8"), stored_password.encode("utf-8")):
                         return True
                     else:
