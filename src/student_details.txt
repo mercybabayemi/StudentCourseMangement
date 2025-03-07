@@ -1,2 +1,5 @@
 Emmanuel:Igho:ighoe571@gmail.com:$2b$12$E5pVvJkK7wQHMSxG86RYw.WCZ4ZLhivaAM4qDx9rnfi.XebiWYDU.
 jonathan:igho:ighoe571@gmmail.com:$2b$12$6tNkp3m674GrngbsoI6WeuGFPnUXUJRalkeIUAU/cx5E05yHzNeKG
+Jonathan:Igho:man@gmail.com:$2b$12$CUPS/JDFBCnLjPRaJ9G0Ye6054H4R.OO8pUMRfpm6/u0/hUR5Ro/q
+shibuzo:Hacker:shibuzo@hacker.com:$2b$12$lFuZWf6FwlQjqGkF.dclQuvUzJt2IhFwuJ4JGte.aG729qDerudKG
+lase:igho:lase@gmail.com:$2b$12$bO9lKUnLNEeQMe08mg79DuKiNxI7h.5kFJEo8oAJIMguqKsppJNhS

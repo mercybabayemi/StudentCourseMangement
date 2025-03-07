@@ -58,8 +58,9 @@ def teacher_menu():
             --- Teacher Menu ---
             1. Add course
             2. Remove course
-            3. Grade Students
-            4. Log out
+            3. View Teaching courses
+            4. Grade Students
+            5. Log out
         """)
         choice = input("Enter your choice 1- 4: ").strip()
         match choice:
@@ -70,6 +71,8 @@ def teacher_menu():
                 course = input("Enter course name: ")
                 manger.remove_course(course)
             case '3':
+                print("You caught us on this one. Working on it")
+            case '4':
                 students = manger.get_students()
                 for student in students:
                     if not student.courses:
@@ -83,8 +86,9 @@ def teacher_menu():
                             print(f"Grade recorded for {student.name} in {course.course_name}: {grade}")
                         except ValueError:
                             print("Invalid input. Please enter a numeric value for the grade.")
-
-#
+            case '5':
+                print("Logging out...\n")
+                break
 
 def main():
     student_grade = StudentManagementSystem()

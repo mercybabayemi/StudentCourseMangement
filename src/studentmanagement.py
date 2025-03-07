@@ -1,3 +1,4 @@
+import student
 from grade import Grade
 from student import Student
 from professor import Professor
@@ -38,11 +39,12 @@ class StudentManagementSystem:
 
     def register_professor(self, first_name, last_name, email, password):
         try:
-            professor = Professor(password)
-            if not professor.verify_email(email):
-                professor.register(first_name, last_name, email, password)
-                self.professors.append(professor)
-                print(f"Professor {first_name} {last_name} registered successfully.")
+            students = Student(password)
+            if not students.verify_email(email):
+                professor = Professor(password)
+                if not professor.verify_email(email):
+                    professor.register(first_name, last_name, email, password)
+                    self.professors.append(professor)
             else:
                 raise ValueError("Email already exists")
         except Exception as e:

@@ -2,12 +2,13 @@ import os
 import unittest
 from unittest.mock import patch
 
+import file_saver
 from student import Student
 
 
 class MyTestCase(unittest.TestCase):
     def setUp(self):
-        self.student1 = Student("Password1.")
+        self.student1 = Student("Mercy","Babayemi","mercy@gmail.com","Password1.")
         self.test_file = "student_details.txt"
         if os.path.exists(self.test_file):
             os.remove(self.test_file)
@@ -22,11 +23,11 @@ class MyTestCase(unittest.TestCase):
             self.assertTrue(os.path.exists(self.test_file))
 
     def test_login_success(self):
-        with patch('builtins.input', side_effect=["Mercy", "Babayemi", "mercy.babayemi@example.com"]):
-            self.student1.register("Mercy", "Babayemi", "mercy.babayemi@example.com","Password1.")
+        with patch('builtins.input', side_effect=["Mercy", "Babayemi", "mercy.babayemi@example.com","jonathan"]):
+            self.student1.register("Mercy", "Babayemi", "mercy.babayemi@example.com","jonathan")
 
-        with patch('builtins.input', side_effect=["mercy.babayemi@example.com", "Password1."]):
-            self.assertTrue(self.student1.login("mercy.babayemi@example.com","Password1."))
+        with patch('builtins.input', side_effect=["Mercy", "Babayemi", "mercy.babayemi@example.com","jonathan"]):
+            self.assertTrue(self.student1.login("mercy.babayemi@example.com", "jonathan" ))
 
     def test_login_failure(self):
         with patch('builtins.input', side_effect=["Mercy", "Babayemi", "mercy.babayemi@example.com", "Password1."]):
@@ -54,22 +55,20 @@ class MyTestCase(unittest.TestCase):
             self.student1.view_course_grade("Mathematics")
             mock_print.assert_called_with("Your grade for Mathematics is A.")
 
-    # def test_save_to_file(self):
-    #     self.student1.first_name = "Mercy"
-    #     self.student1.last_name = "Janet"
-    #     self.student1.email = "mercy.babayemi@example.com"
-    #     self.student1.save_to_file()
-    #
-    #     with open(self.test_file, "r") as file:
-    #         content = file.read()
-    #         self.assertIn("Mercy:Janet:mercy.babayemi@example.com:", content)
-    #
-    # def test_load_from_file_success(self):
-    #     self.student1.first_name = "John"
-    #     self.student1.last_name = "Doe"
-    #     self.student1.email = "john.doe@example.com"
-    #     self.student1.save_to_file()
-    #     self.assertTrue(self.student1.load_from_file("Password1.", "john.doe@example.com"))
+    def test_save_to_file(self):
+         file_saver.save_to_file_for_student("Mercy","Babayemi","mercy@gmail.com","Password1.")
+
+         with open(self.test_file, "r") as file:
+             content = file.read()
+             self.assertIn("Mercy:Babayemi:mercy@gmail.com:", content)
+
+    def test_load_from_file_success(self):
+         self.student1.first_name = "John"
+         self.student1.last_name = "Doe"
+         self.student1.email = "john.doe@example.com"
+         self.student1.password = "password"
+
+         self.assertTrue(self.student1.load_from_file("Password1.", "john.doe@example.com"))
     #
     # def test_load_from_file_failure(self):
     #     self.student1.first_name = "John"

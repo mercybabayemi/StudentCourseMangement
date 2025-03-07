@@ -1,33 +1,37 @@
 import bcrypt
-
+import authentication
+import file_saver
 from user import User
 
 class Student(User):
-    def __init__(self,password):
-        super().__init__(password)
+    def __init__(self,first_name,last_name,email,password):
+        super().__init__(first_name,last_name, email, password)
         self.enrolled_courses = []
         self.grades = {}
+        self.is_logged_in = False
 
 
     def register(self,first_name,last_name,email,password):
         try:
-            self.first_name = first_name
-            self.last_name = last_name
-            self.email = email
-            self.password = password
-            self.save_to_file()
+            self.first_name = authentication.validate_name(first_name)
+            self.last_name = authentication.validate_name(last_name)
+            self.email = authentication.validate_email(email)
+            self.password = authentication.validate_password(password)
+            file_saver.save_to_file_for_student(self.first_name,self.last_name,self.email,self.password)
         except ValueError as e:
             print(f"Error during registration: {e}")
 
-    def login(self, email, password):
-        try:
-            if self.load_from_file(password, email):
-                return True
-            else:
-                return False
-        except Exception as e:
-            print(e)
+    def log_in_state(self):
+        return self.is_logged_in
 
+
+    def login(self, email, password):
+        if email == self.email and password == self.password:
+            self.is_logged_in = True
+            return True
+
+    def log_out(self):
+        self.is_logged_in = False
 
 
     def register_for_course(self, course_name):
@@ -54,49 +58,10 @@ class Student(User):
         else:
             print(f"No grade found for {course_name}.")
 
-    def save_to_file(self):
-        hashed_password = bcrypt.hashpw(self.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-        with open("student_details.txt", 'a') as file:
-            file.write(f'{self.first_name}:{self.last_name}:{self.email}:{hashed_password}\n')
-
-    def load_from_file(self, password, email):
-        try:
-            with open("student_details.txt", 'r') as file:
-                for line in file:
-                    data = line.strip().split(':')
-                    stored_firstname, stored_lastname, stored_email, stored_password = data[0], data[1], data[2], data[3]
-                    if email == stored_email:
-                        if bcrypt.checkpw(password.encode('utf-8'), stored_password.encode('utf-8')):
-                            self.first_name = stored_firstname
-                            self.last_name = stored_lastname
-                            return True
-                        else:
-                            raise ValueError("Incorrect password or email")
-        except FileNotFoundError as e:
-            print(e)
-            return False
 
 
 
-    def verify_email_in_file(self, email,password):
-        with open("student_details.txt", 'r') as file:
-            for line in file:
-                data = line.strip().split(':')
-                stored_firstname, stored_lastname, stored_email, stored_password = data[0], data[1], data[2], data[3]
-                if email == stored_email:
-                    if bcrypt.checkpw(password.encode('utf-8'), stored_password.encode('utf-8')):
-                        return True
 
-            return False
-
-    def verify_email(self, email):
-        with open("student_details.txt", 'r') as file:
-            for line in file:
-                data = line.strip().split(':')
-                stored_firstname, stored_lastname, stored_email, stored_password = data[0], data[1], data[2], data[3]
-                if email == stored_email:
-                    return True
-        return False
 
 
 
