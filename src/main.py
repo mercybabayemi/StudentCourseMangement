@@ -40,8 +40,8 @@ def student_menu():
                 course = manager.find_course_id(id_number)
                 print(f"Here is the course: {course}")
             case '6':
-                print("You caught us on this one. Working on it")
-                manager.view_grade()
+                id_number = int(input("Enter course id number: "))
+                print(f'Here is the course:{manager.find_course_by_id(id_number)}')
             case '7':
                 print("Logging out...\n")
                 break
@@ -128,9 +128,11 @@ def main():
                        if student_grade.verify_student_role(password, email):
                            student_grade.login_in_student(email, password)
                            student_menu()
-                       if student_grade.verify_teacher_role(password, email):
+                       elif student_grade.verify_teacher_role(password, email):
                            student_grade.login_in_teacher(email, password)
                            teacher_menu()
+                       else:
+                           print("Invalid email or password.")
                     except Exception as e:
                         print("Error:", e)
 

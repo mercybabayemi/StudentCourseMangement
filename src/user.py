@@ -49,7 +49,9 @@ class User:
     def login(self,email,password):
         if email == self.email and password == self.password:
             return True
-        raise NotImplementedError("Subclass must implement login method.")
+        else:
+            raise ValueError ("invalid email or password")
+
 
     def view_courses(self):
         raise NotImplementedError("Subclass must implement view courses method.")
@@ -59,8 +61,8 @@ class User:
             try:
                 password_input = self.validate_user_password(password)
                 return bcrypt.hashpw(password_input.encode('utf-8'), bcrypt.gensalt())
-            except ValueError:
-                print("Invalid input.")
+            except ValueError as e:
+                print(e)
 
 
     def validate_user_password(self, password):

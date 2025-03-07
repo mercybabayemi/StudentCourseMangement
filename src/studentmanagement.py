@@ -19,10 +19,15 @@ class StudentManagementSystem:
     def register_student(self, first_name, last_name, email, password):
         try:
             student = Student(password)
-            student.register(first_name, last_name, email, password)
-            self.students.append(student)
+            if not student.verify_email(email):
+                student.register(first_name, last_name, email, password)
+                self.students.append(student)
+                print(f'Student {first_name} {last_name} registered')
+            else:
+                raise ValueError("Email already exists")
         except Exception as e:
             print(e)
+
 
     def enroll_course(self,course):
         try:
@@ -34,12 +39,12 @@ class StudentManagementSystem:
     def register_professor(self, first_name, last_name, email, password):
         try:
             professor = Professor(password)
-            professor.first_name = first_name
-            professor.last_name = last_name
-            professor.email = email
-            professor.register(first_name, last_name, email, password)
-            self.professors.append(professor)
-            print(f"Professor {first_name} {last_name} registered successfully.")
+            if not professor.verify_email(email):
+                professor.register(first_name, last_name, email, password)
+                self.professors.append(professor)
+                print(f"Professor {first_name} {last_name} registered successfully.")
+            else:
+                raise ValueError("Email already exists")
         except Exception as e:
             print(e)
 
@@ -54,16 +59,7 @@ class StudentManagementSystem:
         except Exception as e:
             print(e)
 
-    def assign_grade(self, student_email, course_name, grade):
-        student = next((student for student in self.students if student.email == student_email), None)
-        if not student:
-            print("Student not found.")
-            return
-        if course_name not in self.courses.courses:
-            print("Course not found.")
-            return
-        self.grades.append(Grade(student_email, course_name, grade))
-        print(f"Grade {grade} assigned to {student_email} for {course_name}.")
+
 
     def view_student_grades(self, student_email):
         student_grades = [grade for grade in self.grades if grade.student == student_email]
@@ -96,7 +92,6 @@ class StudentManagementSystem:
             student.login(email,password)
         except Exception as e:
             print(e)
-
 
 
     def add_course(self,course_name):
@@ -148,6 +143,13 @@ class StudentManagementSystem:
             professor.login(email,password)
         except Exception as e:
             print(e)
+
+    def view_grade(self):
+        pass
+
+    def find_course_by_id(self, id_number):
+        course = self.courses.find_course_using_id(id_number)
+        return course
 
 
 

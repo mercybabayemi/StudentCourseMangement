@@ -25,6 +25,7 @@ class Enrollment:
             self.save_enrolled_courses()
 
 
+
     def save_enrolled_courses(self):
         with open("enrolled_courses.txt", "a") as file:
             for course in self.enrolled_courses:

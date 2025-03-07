@@ -44,11 +44,13 @@ class Professor(User):
                 print(f"- {particular_course}")
 
     def login(self,email,password):
-        if self.load_from_file(password, email):
-            return True
-        else:
-            print("Invalid email or password.")
-            return False
+        try:
+            if self.load_from_file(password, email):
+                return True
+            else:
+                return False
+        except ValueError as e:
+            print(e)
 
     def save_to_file(self):
         hashed_password = bcrypt.hashpw(self.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
@@ -66,11 +68,11 @@ class Professor(User):
                             self.first_name = stored_firstname
                             self.last_name = stored_lastname
                             return True
+                        else:
+                            raise ValueError("Invalid email or password.")
         except FileNotFoundError:
             print("File not found.")
-        except ValueError:
-            print("Invalid email or password is incorrect.")
-        return False
+            return False
 
     def verify_email_in_file(self, email, password):
         with open("professor_details.txt", 'r') as file:
@@ -83,3 +85,15 @@ class Professor(User):
                     else:
                         raise ValueError("Invalid email or password is incorrect.")
             return False
+
+
+    def verify_email(self,email):
+        with open("professor_details.txt", 'r') as file:
+            for line in file:
+                data = line.strip().split(':')
+                stored_firstname, stored_lastname, stored_email, stored_password = data[0], data[1], data[2], data[3]
+                if email == stored_email:
+                    return True
+
+        return False
+

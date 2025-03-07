@@ -20,17 +20,25 @@ class Student(User):
             print(f"Error during registration: {e}")
 
     def login(self, email, password):
-        if self.load_from_file(password, email):
-            return True
-        else:
-            return False
+        try:
+            if self.load_from_file(password, email):
+                return True
+            else:
+                return False
+        except Exception as e:
+            print(e)
+
+
 
     def register_for_course(self, course_name):
-        if course_name not in self.enrolled_courses:
-            self.enrolled_courses.append(course_name)
-            print(f"Successfully enrolled in {course_name}.")
-        else:
-            print(f"You are already enrolled in {course_name}.")
+        try:
+            if course_name not in self.enrolled_courses:
+                self.enrolled_courses.append(course_name)
+                print(f"Successfully enrolled in {course_name}.")
+            else:
+                raise ValueError (f"You are already enrolled in {course_name}.")
+        except Exception as e:
+            print(e)
 
     def view_courses(self):
         if not self.enrolled_courses:
@@ -62,8 +70,10 @@ class Student(User):
                             self.first_name = stored_firstname
                             self.last_name = stored_lastname
                             return True
-        except FileNotFoundError:
-            print("File not found.")
+                        else:
+                            raise ValueError("Incorrect password or email")
+        except FileNotFoundError as e:
+            print(e)
             return False
 
 
@@ -78,6 +88,15 @@ class Student(User):
                         return True
 
             return False
+
+    def verify_email(self, email):
+        with open("student_details.txt", 'r') as file:
+            for line in file:
+                data = line.strip().split(':')
+                stored_firstname, stored_lastname, stored_email, stored_password = data[0], data[1], data[2], data[3]
+                if email == stored_email:
+                    return True
+        return False
 
 
 
