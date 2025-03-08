@@ -61,10 +61,3 @@ class Course:
             if course_name == course:
                 return course_id
         raise Exception(f"Course '{course}' not found")
-
-
-
-
-
-
-

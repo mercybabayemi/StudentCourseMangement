@@ -1,4 +1,5 @@
 import grade_type
+import student
 from database import Database
 from course import Course
 from user import User
@@ -8,14 +9,15 @@ class Professor(User):
     def __init__(self, first_name,last_name,email, password):
         super().__init__(first_name,last_name,email,password)
         self.__grades = {}
-        self.__courses = Course()
+        self.__course_in_use = Course()
         self.__is_logged_in = False
 
+
     def get_courses(self):
-        return self.__courses.courses
+        return self.__course_in_use.courses
 
     def get_course(self, course_id):
-        return self.__courses.courses.get(course_id, None)
+        return self.__course_in_use.courses.get(course_id, None)
 
     def get_grades(self):
         return self.__grades
@@ -33,24 +35,25 @@ class Professor(User):
 
     def add_course(self, input_course):
         try:
-            self.__courses.add_course(input_course)
+            self.__course_in_use.add_course(input_course)
             return f"Course '{input_course}' added successfully."
         except Exception as e:
             return str(e)
 
     def remove_course(self, input_course):
         try:
-            self.__courses.remove_course(input_course)
+            self.__course_in_use.remove_course(input_course)
             return f"Course '{input_course}' removed successfully."
         except Exception as e:
             return str(e)
 
     def view_courses(self):
-        if not self.__courses.courses:
+        course_1 = self.get_courses()
+        if not course_1:
             print("You are not teaching any course yet.")
         else:
             print("Teaching course/courses:")
-            for particular_course in self.__courses.courses.values():
+            for particular_course in self.__course_in_use.courses.values():
                 print(f"- {particular_course}")
 
     def login_state(self):
@@ -67,8 +70,3 @@ class Professor(User):
 
     def logout(self):
         self.__is_logged_in = False
-
-    def assign_grade(self, course_input, numeric_value):
-        if course_input in self.__courses.courses:
-            grade = grade_type.GradeType.from_numeric(numeric_value)
-            self.__grades[course_input] = grade

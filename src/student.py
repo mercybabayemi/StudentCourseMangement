@@ -1,6 +1,4 @@
-import professor
 from database import Database
-from professor import Professor
 from user import User
 
 class Student(User):
@@ -15,6 +13,9 @@ class Student(User):
 
     def get_grades(self):
         return self.__grades
+
+    def professor_grade_setter(self, course_input, grade):
+        self.__grades[course_input] = grade
 
     def register(self,first_name,last_name,email,password):
         try:
@@ -58,18 +59,3 @@ class Student(User):
             print("Your enrolled courses:")
             for course in self.get_enrolled_courses():
                 print(f"- {course}")
-
-
-    def view_course_grade(self, course_name):
-        if course_name in self.__grades:
-            print(f"Your grade for {course_name} is {self.__grades[course_name]}.")
-        else:
-            print(f"No grade found for {course_name}.")
-
-
-
-
-
-
-
-

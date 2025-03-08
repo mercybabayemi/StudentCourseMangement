@@ -157,7 +157,24 @@ class StudentManagementSystem:
 
 
 
+    def view_course_grade(self, course_name, professor):
+        if professor.get_grades():
+            for course_name,grade in professor.get_grades().items():
+                if course_name in self.__enrolled_courses:
+                    print(f"Your grade for {course_name} is {grade}.")
+                else:
+                    print(f"No grade found for {course_name}.")
 
+    def assign_grade(self, student, course_input, numeric_value):
+        if course_input in self.get_courses():
+            if course_input in student.get_enrolled_courses():
+                grade = grade_type.GradeType.from_numeric(numeric_value)
+                student.professor_grade_setter(course_input, grade)
+                self.__grades[course_input] = grade
+                print(f"Grade {grade} assigned for {course_input}.")
+            else:
+                    raise ValueError(f"Student is not enrolled in {course_input}.")
 
-
+        else:
+            raise ValueError(f"Course '{course_input}' is not taught by this professor.")
 
