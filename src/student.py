@@ -1,3 +1,6 @@
+import grade
+import professor
+from course import Course
 from database import Database
 from user import User
 
@@ -7,6 +10,7 @@ class Student(User):
         self.__grades = {}
         self.__enrolled_courses = []
         self.__is_logged_in = False
+        self.__student_course = Course()
 
     def get_enrolled_courses(self):
         return self.__enrolled_courses
@@ -44,11 +48,12 @@ class Student(User):
 
     def register_for_course(self, course_name):
         try:
-            if course_name not in self.__enrolled_courses:
-                self.__enrolled_courses.append(course_name)
-                print(f"Successfully enrolled in {course_name}.")
-            else:
-                raise ValueError (f"You are already enrolled in {course_name}.")
+            if course_name in self.__student_course.get_courses():
+                if course_name not in self.__enrolled_courses:
+                    self.__enrolled_courses.append(course_name)
+                    print(f"Successfully enrolled in {course_name}.")
+                else:
+                    raise ValueError (f"You are already enrolled in {course_name}.")
         except Exception as e:
             print(e)
 
@@ -59,3 +64,9 @@ class Student(User):
             print("Your enrolled courses:")
             for course in self.get_enrolled_courses():
                 print(f"- {course}")
+
+    def view_course_grades(self):
+        if not self.get_enrolled_courses() or not self.__student_course.courses():
+            print("You are not enrolled in any course.")
+        else:
+            print(f"Your grades are {self.__grades}")

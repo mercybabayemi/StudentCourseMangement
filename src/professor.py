@@ -9,15 +9,15 @@ class Professor(User):
     def __init__(self, first_name,last_name,email, password):
         super().__init__(first_name,last_name,email,password)
         self.__grades = {}
-        self.__course_in_use = Course()
+        self.__professor_course = Course()
         self.__is_logged_in = False
 
 
     def get_courses(self):
-        return self.__course_in_use.courses
+        return self.__professor_course.courses
 
     def get_course(self, course_id):
-        return self.__course_in_use.courses.get(course_id, None)
+        return self.__professor_course.courses.get(course_id, None)
 
     def get_grades(self):
         return self.__grades
@@ -35,14 +35,14 @@ class Professor(User):
 
     def add_course(self, input_course):
         try:
-            self.__course_in_use.add_course(input_course)
+            self.__professor_course.add_course(input_course)
             return f"Course '{input_course}' added successfully."
         except Exception as e:
             return str(e)
 
     def remove_course(self, input_course):
         try:
-            self.__course_in_use.remove_course(input_course)
+            self.__professor_course.remove_course(input_course)
             return f"Course '{input_course}' removed successfully."
         except Exception as e:
             return str(e)
@@ -53,7 +53,7 @@ class Professor(User):
             print("You are not teaching any course yet.")
         else:
             print("Teaching course/courses:")
-            for particular_course in self.__course_in_use.courses.values():
+            for particular_course in self.__professor_course.courses.values():
                 print(f"- {particular_course}")
 
     def login_state(self):
@@ -70,3 +70,10 @@ class Professor(User):
 
     def logout(self):
         self.__is_logged_in = False
+
+    def assign_grades(self,course_name, grade):
+        if course_name in self.__professor_course.courses:
+            self.__grades[course_name] = grade
+            print(f"Grade {grade} assigned for {course_name}.")
+        else:
+            raise ValueError(f"Student is not enrolled in {course_name}.")
