@@ -23,14 +23,15 @@ class Professor(User):
         return self.__grades
 
     def register(self,first_name,last_name,email,password):
-        try:
-            self.__first_name = first_name
-            self.__last_name = last_name
-            self.__email = email
-            self.__password = password
-            Database.save_to_file(self.__first_name,self.__last_name,self.__email,self.__password)
-        except ValueError as e:
-            print(f"Error during registration: {e}")
+            if not Database("student_details.txt").verify_email_exist(email) and not Database("professor_details.txt").verify_email_exist(email):
+                self.__first_name = first_name
+                self.__last_name = last_name
+                self.__email = email
+                self.__password = password
+                Database("professor_details.txt").save_to_file(self.__first_name,self.__last_name,self.__email,self.__password)
+            else:
+                raise ValueError("Email already registered")
+
 
 
     def add_course(self, input_course):
@@ -61,7 +62,7 @@ class Professor(User):
 
     def login(self,email,password):
         try:
-            if Database.load_from_file(password, email):
+            if Database("professor_details.txt").load_from_file(email,password):
                 self.__is_logged_in = True
                 print("You are logged in.")
             return self.__is_logged_in

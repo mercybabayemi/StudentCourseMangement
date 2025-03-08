@@ -27,7 +27,7 @@ class Student(User):
             self.__last_name = last_name
             self.__email = email
             self.__password = password
-            Database.save_to_file(self.__first_name,self.__last_name,self.__email,self.__password)
+            Database("student_details.txt").save_to_file(self.__first_name,self.__last_name,self.__email,self.__password)
         except ValueError as e:
             print(f"Error during registration: {e}")
 
@@ -36,7 +36,7 @@ class Student(User):
 
     def login(self, email, password):
         try:
-            if Database.load_from_file(password, email):
+            if Database("student_details.txt").load_from_file(password, email):
                 self.__is_logged_in = True
                 print("You are logged in.")
             return self.__is_logged_in
