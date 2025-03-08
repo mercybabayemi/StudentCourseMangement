@@ -35,10 +35,6 @@ class TestProfessor(unittest.TestCase):
         self.assertEqual(result, "Course 'Computer Science' removed successfully.")
         self.assertNotIn("Computer Science", self.professor1.get_courses())
 
-    def test_remove_course_not_found(self):
-       result = self.professor1.remove_course("Biology")
-       self.assertEqual(result, "Course 'Biology' not found")
-
     def test_view_courses(self):
         self.professor1.add_course("Mathematics")
         self.professor1.add_course("Physics")

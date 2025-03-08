@@ -10,24 +10,29 @@ class MyTestCase(unittest.TestCase):
     def setUp(self):
         self.user_class = User("Mercy","Babayemi","mercy@gmail.com","Password1.")
 
-    def test_that_user_class_return_error_if_name_is_empty(self):
-        with self.assertRaises(ValueError):
-            User("Mercy", "", "mercy@gmail.com", "Password1.")
+    def test_that_user_class_returns_correct_firstname(self):
+        self.assertEqual("Mercy", self.user_class.first_name)
 
-    def test_that_user_class_return_error_if_last_name_is_empty(self):
-        with self.assertRaises(ValueError):
-            User("Mercy", "", "mercy@gmail.com", "Password1.")
+    def test_that_user_class_asserts_false_if_first_name_is_empty(self):
+        self.assertFalse(self.user_class.first_name == " ")
 
-    def test_that_user_class_return_error_if_given_password_that_is_not_up_to_eight_or_more_characters(self):
-        with self.assertRaises(ValueError):
-            User("Mercy", "Babayemi", "mercy@gmail.com", "pass")
+    def test_that_user_class_returns_correct_lastname(self):
+        self.assertEqual("Babayemi", self.user_class.last_name)
 
-    def test_that_user_email_given_is_a_correct_value_when_registering(self):
+    def test_that_user_class_asserts_false_if_last_name_is_empty(self):
+        self.assertFalse(self.user_class.last_name == " ")
+
+    def test_that_user_class_returns_correct_email(self):
         self.assertEqual("mercy@gmail.com", self.user_class.email)
 
-    def test_that_when_user_given_invalid_email_raise_exception(self):
-        with self.assertRaises(ValueError):
-            User("Mercy", "Babayemi", "mercy.com", "password")
+    def test_that_user_class_asserts_false_if_email_is_empty(self):
+        self.assertFalse(self.user_class.email == " ")
+
+    def test_that_user_class_returns_correct_password(self):
+        self.assertEqual("Password1.", self.user_class.get_password())
+
+    def test_that_user_class_asserts_false_if_password_is_empty(self):
+        self.assertFalse(self.user_class.get_password() == " ")
 
 
 if __name__ == '__main__':

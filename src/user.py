@@ -31,13 +31,8 @@ class User:
     def __email(self, value):
         self.email = value
 
-    @property
-    def __password(self):
-        return self.password
-
-    @__password.setter
-    def __password(self, value):
-        self.password = value
+    def get_password(self):
+        return self.__password
 
     def register(self,first_name,last_name,email, password):
         raise NotImplementedError("Subclass must implement register method.")

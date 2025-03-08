@@ -3,6 +3,7 @@ import unittest
 from unittest.mock import patch
 
 import file_saver
+from professor import Professor
 from student import Student
 
 
@@ -10,6 +11,7 @@ class MyTestCase(unittest.TestCase):
     def setUp(self):
         self.student1 = Student("Mercy","Babayemi","mercy@gmail.com","Password1.")
         self.test_file = "student_details.txt"
+        self.professor1 = Professor("Emmanuel", "Igho", "emmanuel.igho@example.com", "Password2.")
         if os.path.exists(self.test_file):
             os.remove(self.test_file)
 
@@ -66,14 +68,6 @@ class MyTestCase(unittest.TestCase):
             mock_print.assert_any_call("Your enrolled courses:")
             mock_print.assert_any_call("- Mathematics")
             mock_print.assert_any_call("- Physics")
-
-
-    # def test_view_course_grade(self):
-    #     self.student1.get_grades["Mathematics"] = "A"
-    #     with patch('builtins.print') as mock_print:
-    #         self.student1.view_course_grade("Mathematics")
-    #         mock_print.assert_called_with("Your grade for Mathematics is A.")
-
 
 if __name__ == '__main__':
     unittest.main()

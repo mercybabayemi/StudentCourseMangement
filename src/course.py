@@ -4,6 +4,8 @@ class Course:
         self.course_id = 1
         self.load_courses_from_file()
 
+    def get_courses(self):
+        return self.courses
 
     def save_courses_to_file(self):
         with open("courses.txt", "a") as file:
@@ -61,10 +63,3 @@ class Course:
             if course_name == course:
                 return course_id
         raise Exception(f"Course '{course}' not found")
-
-
-
-
-
-
-
