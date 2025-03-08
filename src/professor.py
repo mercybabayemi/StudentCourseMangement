@@ -1,99 +1,74 @@
-import bcrypt
-
-import course
+import grade_type
+from database import Database
+from course import Course
 from user import User
 
 
 class Professor(User):
-    def __init__(self, password):
-        super().__init__(password)
-        self.courses = course.Course()
-        #
+    def __init__(self, first_name,last_name,email, password):
+        super().__init__(first_name,last_name,email,password)
+        self.__grades = {}
+        self.__courses = Course()
+        self.__is_logged_in = False
+
+    def get_courses(self):
+        return self.__courses.courses
+
+    def get_course(self, course_id):
+        return self.__courses.courses.get(course_id, None)
+
+    def get_grades(self):
+        return self.__grades
 
     def register(self,first_name,last_name,email,password):
         try:
-            self.first_name = first_name
-            self.last_name = last_name
-            self.email = email
-            self.password = password
-            self.save_to_file()
+            self.__first_name = first_name
+            self.__last_name = last_name
+            self.__email = email
+            self.__password = password
+            Database.save_to_file(self.__first_name,self.__last_name,self.__email,self.__password)
         except ValueError as e:
             print(f"Error during registration: {e}")
 
 
     def add_course(self, input_course):
         try:
-            self.courses.add_course(input_course)
+            self.__courses.add_course(input_course)
             return f"Course '{input_course}' added successfully."
         except Exception as e:
             return str(e)
 
     def remove_course(self, input_course):
         try:
-            self.courses.remove_course(input_course)
+            self.__courses.remove_course(input_course)
             return f"Course '{input_course}' removed successfully."
         except Exception as e:
             return str(e)
 
     def view_courses(self):
-        if not self.courses.courses:
-            print("You are not teaching any courses.")
+        if not self.__courses.courses:
+            print("You are not teaching any course yet.")
         else:
-            print("Your teaching courses:")
-            for particular_course in self.courses.courses.values():
+            print("Teaching course/courses:")
+            for particular_course in self.__courses.courses.values():
                 print(f"- {particular_course}")
+
+    def login_state(self):
+        return self.__is_logged_in
 
     def login(self,email,password):
         try:
-            if self.load_from_file(password, email):
-                return True
-            else:
-                return False
-        except ValueError as e:
+            if Database.load_from_file(password, email):
+                self.__is_logged_in = True
+                print("You are logged in.")
+            return self.__is_logged_in
+        except Exception as e:
             print(e)
 
-    def save_to_file(self):
-        hashed_password = bcrypt.hashpw(self.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-        with open("professor_details.txt", 'a') as file:
-            file.write(f'{self.first_name}:{self.last_name}:{self.email}:{hashed_password}\n')
+    def logout(self):
+        self.__is_logged_in = False
 
-    def load_from_file(self, password, email):
-        try:
-            with open("professor_details.txt", 'r') as file:
-                for line in file:
-                    data = line.strip().split(':')
-                    stored_firstname, stored_lastname, stored_email, stored_password = data[0], data[1], data[2], data[3]
-                    if self.email == stored_email:
-                        if bcrypt.checkpw(password.encode("utf-8"), stored_password.encode("utf-8")):
-                            self.first_name = stored_firstname
-                            self.last_name = stored_lastname
-                            return True
-                        else:
-                            raise ValueError("Invalid email or password.")
-        except FileNotFoundError:
-            print("File not found.")
-            return False
-
-    def verify_email_in_file(self, email, password):
-        with open("professor_details.txt", 'r') as file:
-            for line in file:
-                data = line.strip().split(':')
-                stored_firstname, stored_lastname, stored_email, stored_password = data[0], data[1], data[2], data[3]
-                if email == stored_email:
-                    if bcrypt.checkpw(password.encode("utf-8"), stored_password.encode("utf-8")):
-                        return True
-                    else:
-                        raise ValueError("Invalid email or password is incorrect.")
-            return False
-
-
-    def verify_email(self,email):
-        with open("professor_details.txt", 'r') as file:
-            for line in file:
-                data = line.strip().split(':')
-                stored_firstname, stored_lastname, stored_email, stored_password = data[0], data[1], data[2], data[3]
-                if email == stored_email:
-                    return True
-
-        return False
-
+    def assign_grade(self, course_input, numeric_value):
+        if course_input in self.__courses.courses:
+            grade = grade_type.GradeType.from_numeric(numeric_value)
+            self.__grades[course_input] = grade

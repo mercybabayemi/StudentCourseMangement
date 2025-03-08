@@ -4,8 +4,9 @@ from unittest.mock import patch
 from professor import Professor
 
 class TestProfessor(unittest.TestCase):
+
     def setUp(self):
-        self.professor1 = Professor("Password1.")
+        self.professor1 = Professor("Mercy", "Babayemi", "mercy@gmail.com", "Password1.")
         self.test_file = "professor_detail.txt"
         self.test_file_two = "courses.txt"
         if os.path.exists(self.test_file):
@@ -21,8 +22,7 @@ class TestProfessor(unittest.TestCase):
 
     def test_add_course_success(self):
         self.professor1.add_course("Mathematics")
-        self.assertIn(1, self.professor1.courses.courses)
-        self.assertEqual(self.professor1.courses.courses[1], "Mathematics")
+        self.assertIn("Mathematics", self.professor1.get_courses().values())
 
     def test_add_course_duplicate(self):
         self.professor1.add_course("Physics")
@@ -33,8 +33,7 @@ class TestProfessor(unittest.TestCase):
         self.professor1.add_course("Computer Science")
         result = self.professor1.remove_course("Computer Science")
         self.assertEqual(result, "Course 'Computer Science' removed successfully.")
-        self.assertNotIn("Computer Science", self.professor1.courses.courses)
-
+        self.assertNotIn("Computer Science", self.professor1.get_courses())
 
     def test_remove_course_not_found(self):
        result = self.professor1.remove_course("Biology")
@@ -45,7 +44,9 @@ class TestProfessor(unittest.TestCase):
         self.professor1.add_course("Physics")
         with patch('builtins.print') as mock_print:
             self.professor1.view_courses()
-            mock_print.assert_any_call("Your teaching courses:")
+            mock_print.assert_any_call("Teaching course/courses:")
             mock_print.assert_any_call("- Mathematics")
             mock_print.assert_any_call("- Physics")
 
+if __name__ == '__main__':
+    unittest.main()
