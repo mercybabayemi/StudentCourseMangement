@@ -71,7 +71,7 @@ class Professor(User):
     def logout(self):
         self.__is_logged_in = False
 
-    def assign_grades(self,course_name, grade):
+    def professor_assign_grades(self,course_name, grade):
         if course_name in self.__professor_course.courses:
             self.__grades[course_name] = grade
             print(f"Grade {grade} assigned for {course_name}.")

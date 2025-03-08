@@ -18,7 +18,7 @@ class Student(User):
     def get_grades(self):
         return self.__grades
 
-    def professor_grade_setter(self, course_input, grade):
+    def student_grade_setter(self, course_input, grade):
         self.__grades[course_input] = grade
 
     def register(self,first_name,last_name,email,password):
