@@ -7,22 +7,28 @@ class TestProfessor(unittest.TestCase):
 
     def setUp(self):
         self.professor1 = Professor("Mercy", "Babayemi", "mercy@gmail.com", "Password1.")
-        self.test_file = "professor_detail.txt"
-        self.test_file_two = "courses.txt"
-        if os.path.exists(self.test_file):
+        self.test_file = "professor_details.txt"
+        self.test_file_two = "course_details.txt"
+        if os.path.isfile(self.test_file):
             os.remove(self.test_file)
-            if os.path.exists(self.test_file_two):
-                os.remove(self.test_file_two)
+        if os.path.isfile(self.test_file_two):
+            os.remove(self.test_file_two)
 
     def tearDown(self):
-        if os.path.exists(self.test_file):
+        if os.path.isfile(self.test_file):
             os.remove(self.test_file)
-        if os.path.exists(self.test_file_two):
+        if os.path.isfile(self.test_file_two):
             os.remove(self.test_file_two)
+
+
 
     def test_add_course_success(self):
         self.professor1.add_course("Mathematics")
         self.assertIn("Mathematics", self.professor1.get_courses().values())
+
+    def test_that_i_can_login_successfully(self):
+            self.professor1.register("Mercy","Babayemi","mercy@gmail.com","Password1.")
+            self.assertTrue(self.professor1.login("mercy@gmail.com","Password1."))
 
     def test_add_course_duplicate(self):
         self.professor1.add_course("Physics")

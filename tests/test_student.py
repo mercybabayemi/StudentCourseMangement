@@ -3,6 +3,7 @@ import unittest
 from unittest.mock import patch
 
 import file_saver
+from database import Database
 from professor import Professor
 from student import Student
 
@@ -11,49 +12,35 @@ class MyTestCase(unittest.TestCase):
     def setUp(self):
         self.student1 = Student("Mercy","Babayemi","mercy@gmail.com","Password1.")
         self.test_file = "student_details.txt"
-        self.professor1 = Professor("Emmanuel", "Igho", "emmanuel.igho@example.com", "Password2.")
-        if os.path.exists(self.test_file):
+        if os.path.isfile(self.test_file):
             os.remove(self.test_file)
 
     def tearDown(self):
-        if os.path.exists(self.test_file):
+        if os.path.isfile(self.test_file):
             os.remove(self.test_file)
 
-    def test_register(self):
-        with patch('builtins.input', side_effect=["Mercy", "Babayemi", "mercy.babayemi@example.com"]):
+
+    def test_that_when_i_register_the_file_exists(self):
             self.student1.register("Mercy","Babayemi","mercy.babayemi@example.com","Password1.")
             self.assertTrue(os.path.exists(self.test_file))
 
-    def test_login_success(self):
-        with patch('builtins.input', side_effect=["Mercy", "Babayemi", "mercy.babayemi@example.com","jonathan"]):
-            self.student1.register("Mercy", "Babayemi", "mercy.babayemi@example.com","jonathan")
-
-        with patch('builtins.input', side_effect=["Mercy", "Babayemi", "mercy.babayemi@example.com","jonathan"]):
-            self.assertTrue(self.student1.login("mercy.babayemi@example.com", "jonathan" ))
+    def test_that_i_can_login_successfully(self):
+            self.student1.register("Mercy","Babayemi","mercy@gmail.com","Password1.")
+            self.assertTrue(self.student1.login("mercy@gmail.com","Password1."))
 
     def test_login_state_success(self):
-        with patch('builtins.input', side_effect=["Mercy", "Babayemi", "mercy.babayemi@example.com","Jonathan"]):
             self.student1.register("Mercy", "Babayemi", "mercy.babayemi@example.com","Jonathan")
-
-        with patch('builtins.input', side_effect=["Mercy", "Babayemi", "mercy.babayemi@example.com","Jonathan"]):
             self.assertTrue(self.student1.login("mercy.babayemi@example.com", "Jonathan" ))
+            self.assertTrue(self.student1.login_state())
 
-        self.assertTrue(self.student1.login_state())
 
     def test_login_state_failure(self):
-        with patch('builtins.input', side_effect=["Mercy", "Babayemi", "mercy.babayemi@example.com", "Password1."]):
             self.student1.register("Mercy", "Babayemi", "mercy.babayemi@example.com", "Password1.")
-
-        with patch('builtins.input', side_effect=["mercy.babayemi@example.com", "WrongPassword"]):
             self.assertFalse(self.student1.login("mercy.babayemi@example.com", "wrongPassword"))
-
-        self.assertFalse(self.student1.login_state())
+            self.assertFalse(self.student1.login_state())
 
     def test_login_failure(self):
-        with patch('builtins.input', side_effect=["Mercy", "Babayemi", "mercy.babayemi@example.com", "Password1."]):
             self.student1.register("Mercy", "Babayemi", "mercy.babayemi@example.com", "Password1.")
-
-        with patch('builtins.input', side_effect=["mercy.babayemi@example.com", "WrongPassword"]):
             self.assertFalse(self.student1.login("mercy.babayemi@example.com", "wrongPassword"))
 
     def test_register_for_course(self):
