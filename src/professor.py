@@ -47,6 +47,7 @@ class Professor(User):
             return f"Course '{input_course}' removed successfully."
         except Exception as e:
             return str(e)
+        #
 
     def view_courses(self):
         course_1 = self.get_courses()
