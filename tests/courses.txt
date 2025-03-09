@@ -1,0 +1,10 @@
+1:Physics
+1:Physics
+3:Mathematics
+1:Physics
+3:Mathematics
+9:Computer Science
+1:Physics
+3:Mathematics
+1:Physics
+3:Mathematics
