@@ -22,7 +22,7 @@ class MyTestCase(unittest.TestCase):
             os.remove(self.test_file)
         if os.path.isfile("professor_details.txt"):
             os.remove("professor_details.txt")
-
+#
 
     def test_that_when_i_register_the_file_exists(self):
             self.student1.register("Mercy","Babayemi","mercy.babayemi@example.com","Password1.")
