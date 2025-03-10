@@ -47,3 +47,16 @@ class Database:
                     return True
                 else:
                     return False
+
+    def save_to_file_grades(self,course_name,student_email,grade,grade_type):
+        with open(self.__file_name, 'a') as file:
+            file.write(f"{course_name}:{student_email}:{grade}:{grade_type}\n")
+
+
+    def load_from_file_grades(self):
+        with open(self.__file_name, 'r') as file:
+            for line in file:
+                data = line.strip().split(':')
+                course_name, student_email, grade, grade_type = data[0], data[1], data[2], data[3]
+                return [course_name, student_email, grade, grade_type]
+

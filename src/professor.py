@@ -1,7 +1,8 @@
 import grade_type
-import student
 from database import Database
 from course import Course
+from enroll import Enrollment
+from grade_type import GradeType
 from user import User
 
 
@@ -11,6 +12,7 @@ class Professor(User):
         self.__grades = {}
         self.__professor_course = Course()
         self.__is_logged_in = False
+        self.__student_enrolled = Enrollment()
 
 
     def get_courses(self):
@@ -47,7 +49,7 @@ class Professor(User):
             return f"Course '{input_course}' removed successfully."
         except Exception as e:
             return str(e)
-        #
+
 
     def view_courses(self):
         course_1 = self.get_courses()
@@ -73,9 +75,13 @@ class Professor(User):
     def logout(self):
         self.__is_logged_in = False
 
-    def professor_assign_grades(self,course_name, grade):
-        if course_name in self.__professor_course.courses:
-            self.__grades[course_name] = grade
-            print(f"Grade {grade} assigned for {course_name}.")
+    def professor_assign_grades(self,course_name,student_email, grade):
+        if course_name in self.__professor_course.get_courses():
+            if student_email in self.__student_enrolled.view_students_in_course(course_name):
+                self.__grades[course_name] = grade
+                Database("grade_details.txt").save_to_file_grades(course_name,student_email,grade,GradeType.from_numeric(grade))
+            else:
+                raise ValueError("Student not enrolled")
         else:
-            raise ValueError(f"Student is not enrolled in {course_name}.")
+            raise ValueError(f"Invalid course .")
+

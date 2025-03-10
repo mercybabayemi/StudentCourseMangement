@@ -7,10 +7,7 @@ class Course:
     def get_courses(self):
         return self.courses
 
-    def save_courses_to_file(self):
-        with open("courses.txt", "a") as file:
-            for course_id, course_name in self.courses.items():
-                file.write(f"{course_id}:{course_name}\n")
+
 
     def add_course(self, course):
         if course not in self.courses.values():
@@ -21,37 +18,47 @@ class Course:
         else:
             raise Exception(f"Course {course} already exists")
 
+
+    def save_courses_to_file(self):
+        with open("courses.txt", "a") as file:
+            for course_id, course_name in self.courses.items():
+                file.write(f"{course_id}:{course_name}\n")
+
     def load_courses_from_file(self):
         try:
             with open("courses.txt", "r") as file:
                 for line in file:
-                    course_id, course_name = line.strip().split(":", 1)
+                    data =  [line.strip().split(":")]
+                    course_id, course_name = data[0] , data[1]
                     self.courses[int(course_id)] = course_name
-                    self.course_id += max(self.courses.keys()) + 1
+                    self.course_id = max(self.courses.keys()) + 1
         except FileNotFoundError:
             self.courses = {}
-        except IOError as e:
-            print(f"Error loading courses from file: {e}")
 
     def remove_course(self, input_course):
-        course_id_to_remove = None
-        for course_id, course_name in self.courses.items():
-            if course_name == input_course:
-                course_id_to_remove = course_id
-                break
+        course_removed = False
 
-        if course_id_to_remove is not None:
-            del self.courses[course_id_to_remove]
+        for id_number, course_name in list(self.courses.items()):
+            if course_name == input_course:
+                del self.courses[id_number]
+                course_removed = True
+
+        if course_removed:
             self.save_courses_to_file()
+            print(f"Course '{input_course}' has been removed.")
         else:
-            raise Exception(f"Course '{input_course}' not found")
+            raise Exception(f"Course '{input_course}' not found.")
 
     def remove_using_id(self, id_number):
         if id_number in self.courses:
             del self.courses[id_number]
 
     def view_course(self):
-        return self.courses
+        course = []
+        for id_number,course_name in self.courses.items():
+            course.append(course_name)
+        return course
+
 
     def find_course_using_id(self, id_number):
         if id_number in self.courses:

@@ -19,3 +19,4 @@ class GradeType(Enum):
             return GradeType.D
         else:
             return GradeType.F
+

@@ -1,21 +1,19 @@
 import enroll
-import grade
-import professor
 from course import Course
 from database import Database
-from enroll import Enrollment
 from user import User
 
 class Student(User):
     def __init__(self,first_name,last_name,email,password):
         super().__init__(first_name,last_name, email, password)
+        self.__email = email
         self.__grades = {}
         self.__is_logged_in = False
         self.__enrolled_courses = enroll.Enrollment()
         self.__student_course = Course()
 
     def get_enrolled_courses(self):
-        return self.__enrolled_courses.view_enroll_courses()
+        return self.__enrolled_courses.view_enrolled_courses()
 
     def get_grades(self):
         return self.__grades
@@ -53,7 +51,7 @@ class Student(User):
             if course_name in self.__student_course.get_courses():
                 raise ValueError("Course already registered")
             else:
-                self.__enrolled_courses.enroll(course_name)
+                self.__enrolled_courses.enroll(self.__email,course_name)
                 print(f"Successfully enrolled in {course_name}.")
         except Exception as e:
             print(e)
@@ -70,4 +68,6 @@ class Student(User):
         if not self.get_enrolled_courses() or not self.__student_course.courses():
             print("You are not enrolled in any course.")
         else:
-            print(f"Your grades are {self.__grades}")
+            holder = Database("grade_details.txt").load_from_file_grades()
+            if self.__email == holder[1]:
+                print(f"Your grades in {holder[0]} is: {holder[2]}: {holder[3]}")

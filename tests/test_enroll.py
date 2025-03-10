@@ -10,22 +10,24 @@ class TestEnrollment(unittest.TestCase):
 
     def test_that_can_enroll_valid_course(self):
         self.enrollment.course.courses = {1: "python", 2: "java"}
-        self.enrollment.enroll("python")
-        self.assertIn("python", self.enrollment.view_enroll_courses())
+        self.enrollment.enroll("ighoe571@gmail.com","python")
+        self.assertIn("python", self.enrollment.view_enrolled_courses())
 
     def test_that_enroll_invalid_course_raise_exception(self):
         self.enrollment.course.courses = {1: "python", 2: "java"}
         with self.assertRaises(Exception):
-            self.enrollment.enroll("jango")
+            self.enrollment.enroll("ighoe571@gmail.com",'jango')
 
     def test_that_enrolled_courses_should_remove_after_un_enrolled(self):
-        self.enrollment.__enrolled_courses = ["python"]
-        self.enrollment.un_enroll("python")
-        self.assertNotIn("python", self.enrollment.view_enroll_courses())
+        self.enrollment.course.courses = {1: "python", 2: "java"}
+        self.enrollment.enroll("ighoe571@gmail.com","python")
+        self.enrollment.un_enroll("ighoe571@gmail.com","python")
+        self.assertNotIn("python", self.enrollment.view_enrolled_courses())
 
     def test_that_can_view_enrolled_courses(self):
-        self.enrollment.__enrolled_courses = ["python"]
-        self.assertEqual(self.enrollment.view_enroll_courses(), ["python"])
+        self.enrollment.course.courses = {1: "python", 2: "java"}
+        self.enrollment.enroll("ighoe571@gmail.com","python")
+        self.assertEqual(self.enrollment.view_enrolled_courses(), ["python"])
 
 if __name__ == "__main__":
     unittest.main()

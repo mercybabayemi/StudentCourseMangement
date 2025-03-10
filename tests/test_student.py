@@ -15,14 +15,20 @@ class MyTestCase(unittest.TestCase):
             os.remove(self.test_file)
         if os.path.isfile("professor_details.txt"):
             os.remove("professor_details.txt")
-
+        if os.path.isfile("enrolled_courses.txt"):
+            os.remove("enrolled_courses.txt")
+        if os.path.isfile("course_details.txt"):
+            os.remove("course_details.txt")
 
     def tearDown(self):
         if os.path.isfile(self.test_file):
             os.remove(self.test_file)
         if os.path.isfile("professor_details.txt"):
             os.remove("professor_details.txt")
-#
+        if os.path.isfile("__enrolled_courses.txt"):
+            os.remove("__enrolled_courses.txt")
+
+
 
     def test_that_when_i_register_the_file_exists(self):
             self.student1.register("Mercy","Babayemi","mercy.babayemi@example.com","Password1.")
@@ -50,10 +56,6 @@ class MyTestCase(unittest.TestCase):
     def test_register_for_course(self):
         self.student1.register_for_course("Mathematics")
         self.assertEqual(["Mathematics"], self.student1.get_enrolled_courses())
-        if os.path.isfile("courses.txt"):
-            os.remove("courses.txt")
-        if os.path.isfile("__enrolled_courses.txt"):
-            os.remove("__enrolled_courses.txt")
 
 if __name__ == '__main__':
     unittest.main()

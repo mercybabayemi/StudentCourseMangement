@@ -1,7 +1,5 @@
 import unittest
-from unittest.mock import patch
 
-from email_validator import EmailNotValidError
 
 from user import User
 
