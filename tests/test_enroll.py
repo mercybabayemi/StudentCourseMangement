@@ -19,12 +19,12 @@ class TestEnrollment(unittest.TestCase):
             self.enrollment.enroll("jango")
 
     def test_that_enrolled_courses_should_remove_after_un_enrolled(self):
-        self.enrollment.enrolled_courses = ["python"]
+        self.enrollment.__enrolled_courses = ["python"]
         self.enrollment.un_enroll("python")
         self.assertNotIn("python", self.enrollment.view_enroll_courses())
 
     def test_that_can_view_enrolled_courses(self):
-        self.enrollment.enrolled_courses = ["python"]
+        self.enrollment.__enrolled_courses = ["python"]
         self.assertEqual(self.enrollment.view_enroll_courses(), ["python"])
 
 if __name__ == "__main__":

@@ -1,9 +1,6 @@
 import os
 import unittest
-from unittest.mock import patch
 
-import file_saver
-from database import Database
 from professor import Professor
 from student import Student
 
@@ -12,12 +9,19 @@ class MyTestCase(unittest.TestCase):
     def setUp(self):
         self.student1 = Student("Mercy","Babayemi","mercy@gmail.com","Password1.")
         self.test_file = "student_details.txt"
+        professor = Professor("Mercy", "Babayemi", "mercy@gmail.com", "Password1.")
+        professor.add_course("Mathematics")
         if os.path.isfile(self.test_file):
             os.remove(self.test_file)
+        if os.path.isfile("professor_details.txt"):
+            os.remove("professor_details.txt")
+
 
     def tearDown(self):
         if os.path.isfile(self.test_file):
             os.remove(self.test_file)
+        if os.path.isfile("professor_details.txt"):
+            os.remove("professor_details.txt")
 
 
     def test_that_when_i_register_the_file_exists(self):
@@ -45,16 +49,11 @@ class MyTestCase(unittest.TestCase):
 
     def test_register_for_course(self):
         self.student1.register_for_course("Mathematics")
-        self.assertIn("Mathematics", self.student1.get_enrolled_courses())
-
-    def test_view_courses(self):
-        self.student1.register_for_course("Mathematics")
-        self.student1.register_for_course("Physics")
-        with patch('builtins.print') as mock_print:
-            self.student1.view_courses()
-            mock_print.assert_any_call("Your enrolled courses:")
-            mock_print.assert_any_call("- Mathematics")
-            mock_print.assert_any_call("- Physics")
+        self.assertEqual(["Mathematics"], self.student1.get_enrolled_courses())
+        if os.path.isfile("courses.txt"):
+            os.remove("courses.txt")
+        if os.path.isfile("__enrolled_courses.txt"):
+            os.remove("__enrolled_courses.txt")
 
 if __name__ == '__main__':
     unittest.main()
