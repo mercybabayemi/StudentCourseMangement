@@ -1,7 +1,7 @@
-import grade_type
 from database import Database
 from course import Course
 from enroll import Enrollment
+from grade import Grade
 from grade_type import GradeType
 from user import User
 
@@ -9,20 +9,17 @@ from user import User
 class Professor(User):
     def __init__(self, first_name,last_name,email, password):
         super().__init__(first_name,last_name,email,password)
-        self.__grades = {}
         self.__professor_course = Course()
         self.__is_logged_in = False
         self.__student_enrolled = Enrollment()
 
 
     def get_courses(self):
-        return self.__professor_course.courses
+        return self.__professor_course.get_courses()
 
     def get_course(self, course_id):
         return self.__professor_course.courses.get(course_id, None)
 
-    def get_grades(self):
-        return self.__grades
 
     def register(self,first_name,last_name,email,password):
             if not Database("student_details.txt").verify_email_exist(email) and not Database("professor_details.txt").verify_email_exist(email):
@@ -52,12 +49,11 @@ class Professor(User):
 
 
     def view_courses(self):
-        course_1 = self.get_courses()
-        if not course_1:
+        if not self.__professor_course.view_course():
             print("You are not teaching any course yet.")
         else:
             print("Teaching course/courses:")
-            for particular_course in self.__professor_course.courses.values():
+            for particular_course in self.__professor_course.view_course():
                 print(f"- {particular_course}")
 
     def login_state(self):
@@ -77,12 +73,19 @@ class Professor(User):
         self.__is_logged_in = False
 
     def professor_assign_grades(self,course_name,student_email, grade):
-        if course_name in self.__professor_course.get_courses():
+        if course_name in self.__professor_course.view_course():
             if student_email in self.__student_enrolled.view_students_in_course(course_name):
-                self.__grades[course_name] = grade
+                Grade().set_numeric_grade(course_name,student_email,grade)
                 Database("grade_details.txt").save_to_file_grades(course_name,student_email,grade,GradeType.from_numeric(grade))
             else:
                 raise ValueError("Student not enrolled")
         else:
             raise ValueError(f"Invalid course .")
 
+
+
+    def student_enrolled_in_course(self,course_name):
+        try:
+            self.__student_enrolled.view_students_in_course(course_name)
+        except ValueError as e:
+            print(e)

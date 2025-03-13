@@ -18,7 +18,7 @@ class Enrollment:
         if course_name not in available_courses:
             raise ValueError(f"Course '{course_name}' does not exist.")
 
-        if student_email in self.__enrolled_courses:
+        if student_email in self.__enrolled_courses.keys():
             if self.__enrolled_courses[student_email] == course_name:
                 raise ValueError(f"You are already enrolled in '{course_name}'.")
         else:
@@ -67,5 +67,5 @@ class Enrollment:
             print(f"No students enrolled in '{course_name}'.")
 
     def view_enrolled_courses(self):
-        enrolled_courses = list(set(self.__enrolled_courses.values()))
+        enrolled_courses = list((self.__enrolled_courses.values()))
         return enrolled_courses

@@ -25,7 +25,7 @@ class Student(User):
         except ValueError as e:
             print(e)
 
-    def unenroll(self, course_name):
+    def un_enroll(self, course_name):
         try:
             self.__enrolled_courses.un_enroll(self.__email,course_name)
         except ValueError as e:

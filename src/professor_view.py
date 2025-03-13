@@ -1,8 +1,4 @@
-import sys
-
 import authentication
-from course import Course
-from enroll import Enrollment
 
 
 def display(professor,first_name, last_name):
@@ -47,7 +43,7 @@ def case(professor,choice):
         case '3':
             try:
                 course = input("Enter course name:").lower()
-                Enrollment().view_students_in_course(course)
+                professor.student_enrolled_in_course(course)
             except Exception as e:
                 print(f'\033[1;31m{e}\033[0m')
 

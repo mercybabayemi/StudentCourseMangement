@@ -45,7 +45,7 @@ def cases(student,choice,stored_email):
         case "3":
             try:
                 data = student.get_enrolled_courses()
-                if data == []:
+                if not data:
                     print("No enrolled courses available")
                     return
                 for course in data:
@@ -56,7 +56,8 @@ def cases(student,choice,stored_email):
 
         case "4":
             try:
-                student.view_course_grades()
+                course_name = input("Enter course name")
+                student.view_course_grades(course_name)
             except Exception as e:
                 print(f'\033[1;31m{e}\033[0m')
 
