@@ -15,7 +15,7 @@ class Course:
             self.course_id += 1
         else:
             raise Exception(f"Course {course} already exists")
-
+#
     def save_courses_to_file(self):
         with open("courses.txt", "a") as file:
             for course_id, course_name in self.courses.items():
