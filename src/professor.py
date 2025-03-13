@@ -39,7 +39,7 @@ class Professor(User):
     def add_course(self, input_course):
         try:
             self.__professor_course.add_course(input_course)
-            return f"Course '{input_course}' added successfully."
+            return f"Course {input_course} added successfully."
         except Exception as e:
             return str(e)
 
@@ -62,6 +62,7 @@ class Professor(User):
 
     def login_state(self):
         return self.__is_logged_in
+
 
     def login(self,email,password):
         try:

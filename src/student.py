@@ -7,6 +7,7 @@ class Student(User):
     def __init__(self,first_name,last_name,email,password):
         super().__init__(first_name,last_name, email, password)
         self.__email = email
+        self.__first_name = first_name
         self.__grades = {}
         self.__is_logged_in = False
         self.__enrolled_courses = enroll.Enrollment()
@@ -17,6 +18,18 @@ class Student(User):
 
     def get_grades(self):
         return self.__grades
+
+    def enroll(self, course_name):
+        try:
+            self.__enrolled_courses.enroll(self.__email,course_name)
+        except ValueError as e:
+            print(e)
+
+    def unenroll(self, course_name):
+        try:
+            self.__enrolled_courses.un_enroll(self.__email,course_name)
+        except ValueError as e:
+            print(e)
 
     def student_grade_setter(self, course_input, grade):
         self.__grades[course_input] = grade
@@ -36,19 +49,23 @@ class Student(User):
 
     def login(self, email, password):
         try:
-            if Database("student_details.txt").load_from_file(email, password):
+            data = Database("student_details.txt").load_from_file(email, password)
+            if data[1]:
                 self.__is_logged_in = True
                 print("You are logged in.")
-            return self.__is_logged_in
+                return self.__is_logged_in
+            else:
+                return self.__is_logged_in
         except Exception as e:
             print(e)
+
 
     def log_out(self):
         self.__is_logged_in = False
 
     def register_for_course(self, course_name):
         try:
-            if course_name in self.__student_course.get_courses():
+            if course_name in self.__student_course.get_courses().values():
                 raise ValueError("Course already registered")
             else:
                 self.__enrolled_courses.enroll(self.__email,course_name)
@@ -64,8 +81,8 @@ class Student(User):
             for course in self.get_enrolled_courses():
                 print(f"- {course}")
 
-    def view_course_grades(self):
-        if not self.get_enrolled_courses() or not self.__student_course.courses():
+    def view_course_grades(self,course_name):
+        if course_name not in self.get_enrolled_courses() or not self.__student_course.view_course():
             print("You are not enrolled in any course.")
         else:
             holder = Database("grade_details.txt").load_from_file_grades()

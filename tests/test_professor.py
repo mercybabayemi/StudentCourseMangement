@@ -13,16 +13,13 @@ class TestProfessor(unittest.TestCase):
             os.remove(self.test_file)
         if os.path.isfile(self.test_file_two):
             os.remove(self.test_file_two)
-        if os.path.isfile("student_details.txt"):
-            os.remove("student_details.txt")
 
     def tearDown(self):
         if os.path.isfile(self.test_file):
             os.remove(self.test_file)
         if os.path.isfile(self.test_file_two):
             os.remove(self.test_file_two)
-        if os.path.isfile("student_details.txt"):
-            os.remove("student_details.txt")
+
 
 
     def test_add_course_success(self):

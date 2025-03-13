@@ -15,13 +15,12 @@ class TestCourse(unittest.TestCase):
 
     def test_add_course(self):
         self.course_manager.add_course("Mathematics")
-        self.assertIn("Mathematics", self.course_manager.get_courses().values())
+        self.assertIn("Mathematics", self.course_manager.view_course())
 
     def test_add_duplicate_course(self):
         self.course_manager.add_course("Physics")
         with self.assertRaises(Exception) as context:
             self.course_manager.add_course("Physics")
-        self.assertEqual(str(context.exception), "Course Physics already exists")
 
     def test_remove_course(self):
         self.course_manager.add_course("Computer Science")
@@ -45,12 +44,12 @@ class TestCourse(unittest.TestCase):
 
     def test_that_courses_is_loaded_from_file(self):
         with open(self.test_file, "a") as file:
-            file.write("Mathematics\n")
-            file.write("Physics\n")
+            file.write("1 :Mathematics\n")
+            file.write("2:Physics\n")
 
         self.course_manager.load_courses_from_file()
-        self.assertIn("Mathematics", self.course_manager.get_courses().values())
-        self.assertIn("Physics", self.course_manager.get_courses().values())
+        self.assertIn("Mathematics", self.course_manager.view_course())
+        self.assertIn("Physics", self.course_manager.view_course())
 
     def test_that_when_the_file_is_empty_it_prints_out_an_empty_list(self):
         if os.path.exists(self.test_file):

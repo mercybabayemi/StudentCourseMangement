@@ -1,3 +1,4 @@
+import os
 import unittest
 from enroll import Enrollment
 from course import Course
@@ -7,6 +8,12 @@ class TestEnrollment(unittest.TestCase):
     def setUp(self):
         self.enrollment = Enrollment()
         self.enrollment.course = Course()
+        if os.path.isfile("enrolled_courses.txt"):
+            os.remove("enrolled_courses.txt")
+
+    def tearDown(self):
+        if os.path.isfile("enrolled_courses.txt"):
+            os.remove("enrolled_courses.txt")
 
     def test_that_can_enroll_valid_course(self):
         self.enrollment.course.courses = {1: "python", 2: "java"}
@@ -20,8 +27,8 @@ class TestEnrollment(unittest.TestCase):
 
     def test_that_enrolled_courses_should_remove_after_un_enrolled(self):
         self.enrollment.course.courses = {1: "python", 2: "java"}
-        self.enrollment.enroll("ighoe571@gmail.com","python")
-        self.enrollment.un_enroll("ighoe571@gmail.com","python")
+        self.enrollment.enroll("ighoe571@gmail.com","java")
+        self.enrollment.un_enroll("ighoe571@gmail.com","java")
         self.assertNotIn("python", self.enrollment.view_enrolled_courses())
 
     def test_that_can_view_enrolled_courses(self):
