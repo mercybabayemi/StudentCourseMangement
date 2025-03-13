@@ -38,7 +38,7 @@ class Course:
             self.courses = {}
 
     def remove_course(self, input_course):
-        found = False
+        found = False#
         for id_number, course in list(self.courses.items()):
             if input_course == course:
                 del self.courses[id_number]
