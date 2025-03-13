@@ -22,7 +22,7 @@ class Course:
                 file.write(f"{course_id}:{course_name}\n")
 
     def load_courses_from_file(self):
-        try:
+        try:#
             with open("courses.txt", "r") as file:
                 for line in file:
                     data = line.strip().split(":")
