@@ -41,7 +41,7 @@ class TestCourse(unittest.TestCase):
             lines = file.readlines()
             self.assertIn("1:Mathematics\n", lines)
             self.assertIn("2:Physics\n", lines)
-
+#
     def test_that_courses_is_loaded_from_file(self):
         with open(self.test_file, "a") as file:
             file.write("1 :Mathematics\n")
