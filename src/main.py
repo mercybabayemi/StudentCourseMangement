@@ -22,7 +22,7 @@ def display_menu():
 
 
 def cases(choice):
-    match choice:
+    match choice:#
         case "1":
             try:
                 first_name = input("Enter your first name: ")
