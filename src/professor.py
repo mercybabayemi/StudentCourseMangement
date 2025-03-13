@@ -86,6 +86,13 @@ class Professor(User):
 
     def student_enrolled_in_course(self,course_name):
         try:
-            self.__student_enrolled.view_students_in_course(course_name)
+            students_email = self.__student_enrolled.view_students_in_course(course_name)
+            if not students_email:
+                return "No students enrolled in this course."
+            else:
+                print("Student enrolled in this course.")
+                print()
+                for student_email in students_email:
+                    print(f"- {student_email}")
         except ValueError as e:
             print(e)

@@ -37,6 +37,7 @@ def case(professor,choice):
                 student_email = authentication.Authentication.validate_email(student_email)
                 grade = int(input("Enter grade:"))
                 professor.professor_assign_grades(course,student_email,grade)
+                print("Grade as been successfully added")
             except Exception as e:
                 print(f'\033[1;31m{e}\033[0m')
 

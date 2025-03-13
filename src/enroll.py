@@ -58,13 +58,11 @@ class Enrollment:
         return enrolled_students
 
     def view_students_in_course(self, course_name):
-        students = [student_email for student_email, cn in self.__enrolled_courses.items() if cn == course_name]
+        students = [student_email for student_email, course in self.__enrolled_courses.items() if course == course_name]
         if students:
-            print(f"Students enrolled in '{course_name}':")
-            for student_email in students:
-                print(f"- {student_email}")
+            return students
         else:
-            print(f"No students enrolled in '{course_name}'.")
+            raise ValueError(f"No students enrolled in '{course_name}'.")
 
     def view_enrolled_courses(self):
         enrolled_courses = list((self.__enrolled_courses.values()))
