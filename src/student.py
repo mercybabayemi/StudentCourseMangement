@@ -14,7 +14,11 @@ class Student(User):
         self.__student_course = Course()
 
     def get_enrolled_courses(self):
-        return self.__enrolled_courses.view_enrolled_courses()
+        try:
+            return self.__enrolled_courses.view_enrolled_courses()
+        except ValueError as e:
+            print(e)
+
 
     def get_grades(self):
         return self.__grades

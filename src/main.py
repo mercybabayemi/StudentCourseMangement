@@ -1,5 +1,6 @@
 import sys
 
+import authentication
 from studentmanagement import StudentManagementSystem
 
 
@@ -26,22 +27,30 @@ def cases(choice):
         case "1":
             try:
                 first_name = input("Enter your first name: ")
+                first_name = authentication.Authentication.validate_name(first_name,"first name")
                 last_name = input("Enter your last name: ")
+                last_name = authentication.Authentication.validate_name(last_name,"last name")
                 email = input("Enter your email: ")
+                email = authentication.Authentication.validate_email(email)
                 password = input("Enter your password: ")
+                password = authentication.Authentication.validate_password(password)
                 StudentManagementSystem().register_student(first_name, last_name, email, password)
             except Exception as e:
-                print(e)
+                print(f'\033[1;31m{e}\033[0m')
 
         case "2":
             try:
                 first_name = input("Enter your first name: ")
+                first_name = authentication.Authentication.validate_name(first_name, "first name")
                 last_name = input("Enter your last name: ")
+                last_name = authentication.Authentication.validate_name(last_name, "last name")
                 email = input("Enter your email: ")
+                email = authentication.Authentication.validate_email(email)
                 password = input("Enter your password: ")
+                password = authentication.Authentication.validate_password(password)
                 StudentManagementSystem().register_professor(first_name, last_name, email, password)
             except Exception as e:
-                print(e)
+                print(f'\033[1;31m{e}\033[0m')
 
 
         case "3":

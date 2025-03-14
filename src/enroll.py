@@ -15,16 +15,17 @@ class Enrollment:
 
     def enroll(self, student_email, course_name):
         available_courses = self.course.view_course()
+
         if course_name not in available_courses:
             raise ValueError(f"Course '{course_name}' does not exist.")
 
-        if student_email in self.__enrolled_courses.keys():
+        elif student_email in self.__enrolled_courses.keys():
             if self.__enrolled_courses[student_email] == course_name:
                 raise ValueError(f"You are already enrolled in '{course_name}'.")
-        else:
-            self.__enrolled_courses[student_email] = course_name
-            print(f"You have successfully enrolled in {course_name}.")
-            self.save_enrolled_courses()
+            else:
+                self.__enrolled_courses[student_email] = course_name
+                print(f"You have successfully enrolled in {course_name}.")
+                self.save_enrolled_courses()
 
     def un_enroll(self, student_email, course_name):
         if student_email in self.__enrolled_courses and self.__enrolled_courses[student_email] == course_name:
@@ -35,7 +36,7 @@ class Enrollment:
             raise ValueError(f"You are  not enrolled in '{course_name}'.")
 
     def save_enrolled_courses(self):
-        with open("enrolled_courses.txt", "w") as file:
+        with open("enrolled_courses.txt", "a") as file:
             for student_email, course_name in self.__enrolled_courses.items():
                 file.write(f"{student_email}:{course_name}\n")
 
@@ -65,5 +66,5 @@ class Enrollment:
             raise ValueError(f"No students enrolled in '{course_name}'.")
 
     def view_enrolled_courses(self):
-        enrolled_courses = list((self.__enrolled_courses.values()))
+        enrolled_courses = list(set(self.__enrolled_courses.values()))
         return enrolled_courses
