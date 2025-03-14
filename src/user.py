@@ -8,39 +8,39 @@ class User:
         self.__last_name = last_name
 
     @property
-    def __first_name(self):
+    def __first_name(self) -> str:
         return self.first_name
 
     @__first_name.setter
-    def __first_name(self, value):
+    def __first_name(self, value) -> None:
         self.first_name = value
 
     @property
-    def __last_name(self):
+    def __last_name(self) -> str:
         return self.last_name
 
     @__last_name.setter
-    def __last_name(self, value):
+    def __last_name(self, value) -> None:
         self.last_name = value
 
     @property
-    def __email(self):
+    def __email(self) -> str:
         return self.email
 
     @__email.setter
-    def __email(self, value):
+    def __email(self, value) -> None:
         self.email = value
 
-    def get_password(self):
+    def get_password(self) -> str:
         return self.__password
 
-    def register(self,first_name,last_name,email, password):
+    def register(self,first_name,last_name,email, password) -> None:
         raise NotImplementedError("Subclass must implement register method.")
 
-    def login(self,email,password):
+    def login(self,email,password) -> None:
         raise NotImplementedError("Subclass must implement login method.")
 
-    def view_courses(self):
+    def view_courses(self) -> None:
         raise NotImplementedError("Subclass must implement view courses method.")
 
 

@@ -14,33 +14,34 @@ class Professor(User):
         self.__student_enrolled = Enrollment()
 
 
-    def get_courses(self):
+    def get_courses(self) -> dict:
         return self.__professor_course.get_courses()
 
-    def get_course(self, course_id):
+    def get_course(self, course_id) -> Course:
         return self.__professor_course.courses.get(course_id, None)
 
 
-    def register(self,first_name,last_name,email,password):
-            if not Database("student_details.txt").verify_email_exist(email) and not Database("professor_details.txt").verify_email_exist(email):
+    def register(self,first_name,last_name,email,password) -> None:
+            if not Database("../data/student_details.txt").verify_email_exist(email) and not Database(
+                    "../data/professor_details.txt").verify_email_exist(email):
                 self.__first_name = first_name
                 self.__last_name = last_name
                 self.__email = email
                 self.__password = password
-                Database("professor_details.txt").save_to_file(self.__first_name,self.__last_name,self.__email,self.__password)
+                Database("../data/professor_details.txt").save_to_file(self.__first_name, self.__last_name, self.__email, self.__password)
             else:
                 raise ValueError("Email already registered")
 
 
 
-    def add_course(self, input_course):
+    def add_course(self, input_course) -> str:
         try:
             self.__professor_course.add_course(input_course)
             return f"Course {input_course} added successfully."
         except Exception as e:
             return str(e)
 
-    def remove_course(self, input_course):
+    def remove_course(self, input_course) -> str:
         try:
             self.__professor_course.remove_course(input_course)
             return f"Course '{input_course}' removed successfully."
@@ -48,7 +49,7 @@ class Professor(User):
             return str(e)
 
 
-    def view_courses(self):
+    def view_courses(self) -> None:
         if not self.__professor_course.view_course():
             print("You are not teaching any course yet.")
         else:
@@ -56,27 +57,27 @@ class Professor(User):
             for particular_course in self.__professor_course.view_course():
                 print(f"- {particular_course}")
 
-    def login_state(self):
+    def login_state(self) -> bool:
         return self.__is_logged_in
 
 
-    def login(self,email,password):
+    def login(self,email,password) -> bool:
         try:
-            if Database("professor_details.txt").load_from_file(email,password):
+            if Database("../data/professor_details.txt").load_from_file(email, password):
                 self.__is_logged_in = True
                 print("You are logged in.")
             return self.__is_logged_in
         except Exception as e:
             print(e)
 
-    def logout(self):
+    def logout(self) -> None:
         self.__is_logged_in = False
 
-    def professor_assign_grades(self,course_name,student_email, grade):
+    def professor_assign_grades(self,course_name,student_email, grade) -> None:
         if course_name in self.__professor_course.view_course():
             if student_email in self.__student_enrolled.view_students_in_course(course_name):
                 Grade().set_numeric_grade(course_name,student_email,grade)
-                Database("grade_details.txt").save_to_file_grades(course_name,student_email,grade,GradeType.from_numeric(grade))
+                Database("../data/grade_details.txt").save_to_file_grades(course_name, student_email, grade, GradeType.convert_score_to_grade_type(grade))
             else:
                 raise ValueError("Student not enrolled")
         else:

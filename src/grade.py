@@ -5,11 +5,11 @@ class Grade:
         self.course = "course"
         self.student = "student"
         self.numeric_grade = 0.0
-        self.letter_grade = GradeType.from_numeric(self.numeric_grade)
+        self.letter_grade = GradeType.convert_score_to_grade_type(self.numeric_grade)
 
-    def set_numeric_grade(self, course, student, numeric_grade: float):
-        self.numeric_grade = numeric_grade
-        self.letter_grade = GradeType.from_numeric(numeric_grade)
+    def set_numeric_grade(self, course, student, score: float):
+        # self.numeric_grade = score
+        self.letter_grade = GradeType.convert_score_to_grade_type(score)
         self.course = course
         self.student = student
 

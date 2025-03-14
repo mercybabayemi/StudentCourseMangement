@@ -5,7 +5,7 @@ from course import Course
 class TestCourse(unittest.TestCase):
     def setUp(self):
         self.course_manager = Course()
-        self.test_file = "courses.txt"
+        self.test_file = "../data/courses.txt"
         if os.path.exists(self.test_file):
             os.remove(self.test_file)
 

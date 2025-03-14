@@ -11,20 +11,20 @@ class MyTestCase(unittest.TestCase):
         self.student1 = Student("Mercy", "Babayemi", "mercy@gmail.com", "Password1.")
         self.student1.Student_enrolled_courses = Enrollment()
 
-        self.test_file = "student_details.txt"
+        self.test_file = "../data/student_details.txt"
         professor = Professor("Mercy", "Babayemi", "mercy@gmail.com", "Password1.")
         professor.add_course("Mathematics")
 
         if os.path.isfile(self.test_file):
             os.remove(self.test_file)
-        if os.path.isfile("professor_details.txt"):
-            os.remove("professor_details.txt")
+        if os.path.isfile("../data/professor_details.txt"):
+            os.remove("../data/professor_details.txt")
 
     def tearDown(self):
         if os.path.isfile(self.test_file):
             os.remove(self.test_file)
-        if os.path.isfile("professor_details.txt"):
-            os.remove("professor_details.txt")
+        if os.path.isfile("../data/professor_details.txt"):
+            os.remove("../data/professor_details.txt")
 
     def test_that_when_i_register_the_file_exists(self):
         self.student1.register("Mercy", "Babayemi", "mercy.babayemi@example.com", "Password1.")

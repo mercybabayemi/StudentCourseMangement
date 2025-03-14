@@ -7,7 +7,7 @@ class TestProfessor(unittest.TestCase):
 
     def setUp(self):
         self.professor1 = Professor("Mercy", "Babayemi", "mercy@gmail.com", "Password1.")
-        self.test_file = "professor_details.txt"
+        self.test_file = "../data/professor_details.txt"
         self.test_file_two = "course_details.txt"
         if os.path.isfile(self.test_file):
             os.remove(self.test_file)

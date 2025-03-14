@@ -8,12 +8,12 @@ class TestEnrollment(unittest.TestCase):
     def setUp(self):
         self.enrollment = Enrollment()
         self.enrollment.course = Course()
-        if os.path.isfile("enrolled_courses.txt"):
-            os.remove("enrolled_courses.txt")
+        if os.path.isfile("../data/enrolled_courses.txt"):
+            os.remove("../data/enrolled_courses.txt")
 
     def tearDown(self):
-        if os.path.isfile("enrolled_courses.txt"):
-            os.remove("enrolled_courses.txt")
+        if os.path.isfile("../data/enrolled_courses.txt"):
+            os.remove("../data/enrolled_courses.txt")
 
     def test_that_can_enroll_valid_course(self):
         self.enrollment.course.courses = {1: "python", 2: "java"}
