@@ -73,11 +73,11 @@ class Professor(User):
     def logout(self) -> None:
         self.__is_logged_in = False
 
-    def professor_assign_grades(self,course_name,student_email, grade) -> None:
+    def professor_assign_grades(self, course_name, student_email, score) -> None:
         if course_name in self.__professor_course.view_course():
             if student_email in self.__student_enrolled.view_students_in_course(course_name):
-                Grade().set_numeric_grade(course_name,student_email,grade)
-                Database("../data/grade_details.txt").save_to_file_grades(course_name, student_email, grade, GradeType.convert_score_to_grade_type(grade))
+                Grade().set_numeric_grade(course_name, student_email, score)
+                Database("../data/grade_details.txt").save_to_file_grades(course_name, student_email, score, GradeType.convert_score_to_grade_type(score))
             else:
                 raise ValueError("Student not enrolled")
         else:
@@ -85,7 +85,7 @@ class Professor(User):
 
 
 
-    def student_enrolled_in_course(self,course_name):
+    def student_enrolled_in_course(self,course_name) -> str:
         try:
             students_email = self.__student_enrolled.view_students_in_course(course_name)
             if not students_email:

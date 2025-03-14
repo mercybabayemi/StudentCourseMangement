@@ -1,6 +1,6 @@
 import sys
 import authentication
-from studentmanagement import StudentManagementSystem
+from studentmanagement.student_management import StudentManagementSystem
 
 
 def display_menu():

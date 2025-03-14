@@ -45,7 +45,7 @@ class StudentManagementSystem:
         try:
             email = authentication.Authentication.validate_email(email)
             password = authentication.Authentication.validate_password(password)
-            holder_tuple = Database("../data/professor_details.txt").load_from_file(email, password)
+            holder_tuple = Database("../../data/professor_details.txt").load_from_file(email, password)
             holder = holder_tuple[0]
             print_loading_message("Login Professor")
             if holder_tuple[1]:
@@ -72,7 +72,7 @@ class StudentManagementSystem:
     def log_in_student(self, email, password):
         try:
             email = authentication.Authentication.validate_email(email)
-            holder_tuple = Database("../data/student_details.txt").load_from_file(email, password)
+            holder_tuple = Database("../../data/student_details.txt").load_from_file(email, password)
             holder = holder_tuple[0]
             print_loading_message("Login Student")
             if holder_tuple[1]:
@@ -86,7 +86,7 @@ class StudentManagementSystem:
                             Welcome to MEA Institute""")
                 choice = ""
                 while choice != "8":
-                    choice = student_view.display(student,stored_first_name,stored_last_name,stored_email)
+                    choice = student_view.display(student, stored_first_name, stored_last_name, stored_email)
         except Exception as e:
             print("\033[1;31mSomething went wrong!\033[0m")
             print(f'\033[1;31m{e}\033[0m')
