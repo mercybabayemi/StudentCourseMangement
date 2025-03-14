@@ -6,7 +6,7 @@ from user import User
 class Student(User):
     def __init__(self,first_name,last_name,email,password):
         super().__init__(first_name,last_name, email, password)
-        # self.__email = email
+        self.__email = email
         # self.__first_name = first_name
         self.__grades = {}
         self.__is_logged_in = False
@@ -91,4 +91,4 @@ class Student(User):
         else:
             holder = Database("../data/grade_details.txt").load_from_file_grades()
             if self.__email == holder[1]:
-                print(f"Your grades in {holder[0]} is: {holder[2]}: {holder[3]}")
+                print(f"Your grades in {holder[0]} is: {holder[2]}")

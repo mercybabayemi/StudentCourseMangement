@@ -77,7 +77,7 @@ class Database:
                     if not line:
                         continue
                     data = line.split(':')
-                    if len(data) != 4:
+                    if len(data) != 3:
                         print(f"\033[1;31mInvalid data format in file: {line}\033[0m")
                         continue
                     course_name, student_email,grade_type = data

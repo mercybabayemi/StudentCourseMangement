@@ -19,14 +19,13 @@ class Enrollment:
         if course_name not in available_courses:
             raise ValueError(f"Course '{course_name}' does not exist.")
 
-        else:
-            if student_email in self.__enrolled_courses.keys():
-                if self.__enrolled_courses[student_email] == course_name:
-                    raise ValueError(f"You are already enrolled in '{course_name}'.")
-                else:
-                    self.__enrolled_courses[student_email] = course_name
-                    print(f"You have successfully enrolled in {course_name}.")
-                    self.save_enrolled_courses()
+        if student_email in self.__enrolled_courses:
+            if self.__enrolled_courses[student_email] == course_name:
+                raise ValueError(f"You are already enrolled in '{course_name}'.")
+        self.__enrolled_courses[student_email] = course_name
+        print(f"You have successfully enrolled in {course_name}.")
+        self.save_enrolled_courses()
+
 
     def un_enroll(self, student_email, course_name):
         if student_email in self.__enrolled_courses and self.__enrolled_courses[student_email] == course_name:
@@ -42,6 +41,7 @@ class Enrollment:
                 file.write(f"{student_email}:{course_name}\n")
 
     def load_enrolled_courses(self):
+        self.__enrolled_courses = {}
         try:
             with open("../data/enrolled_courses.txt", "r") as file:
                 for line in file:
@@ -60,4 +60,5 @@ class Enrollment:
 
     def view_enrolled_courses(self):
         enrolled_courses = list(set(self.__enrolled_courses.values()))
+        print(enrolled_courses)
         return enrolled_courses

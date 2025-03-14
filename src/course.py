@@ -17,13 +17,13 @@ class Course:
             raise Exception(f"Course {course} already exists")
 
     def save_courses_to_file(self):
-        with open("courses.txt", "a") as file:
+        with open("../data/courses.txt", "a") as file:
             for course_id, course_name in self.courses.items():
                 file.write(f"{course_id}:{course_name}\n")
 
     def load_courses_from_file(self):
         try:#
-            with open("courses.txt", "r") as file:
+            with open("../data/courses.txt", "r") as file:
                 for line in file:
                     data = line.strip().split(":")
                     if len(data) == 2:
