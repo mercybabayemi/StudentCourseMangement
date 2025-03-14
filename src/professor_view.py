@@ -1,10 +1,13 @@
+import time
+
 import authentication
 
 
-def display(professor,first_name, last_name):
-    print(f"""
-        Welcome Professor {first_name} {last_name} 
+def display(professor):
 
+
+    print(f"""
+            
     1. Add courses
     2. Assign courses
     3. View student Enrolled in course
@@ -63,5 +66,12 @@ def case(professor,choice):
                 print(f'\033[1;31m{e}\033[0m')
 
         case '6':
-            print(f"Log out.....")
+            print_loading_message("Log in out")
 
+
+def print_loading_message(message, delay=2.5):
+    print(message, end="", flush=True)
+    for _ in range(3):
+        time.sleep(delay)
+        print(".", end="", flush=True)
+    print()

@@ -1,8 +1,15 @@
+import time
+
 from course import Course
 
 def display(student, stored_first_name, stored_last_name,stored_email):
+
+
+
+
     print(f"""
-        Welcome {stored_first_name} {stored_last_name}!
+    
+        Choose from the following options (1-8) to proceed:
 
         1. View Courses Available
         2. Enroll in Courses
@@ -87,4 +94,15 @@ def cases(student,choice,stored_email):
                 print(f'\033[1;31m{e}\033[0m')
 
         case "8":
-            print("Logging out ....")
+            print_loading_message("Log out")
+
+
+
+
+def print_loading_message(message, delay=0.5):
+    print(message, end="", flush=True)
+    for _ in range(3):
+        time.sleep(delay)
+        print(".", end="", flush=True)
+    print()
+
