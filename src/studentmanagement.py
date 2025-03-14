@@ -1,7 +1,6 @@
 import time
 
 import authentication
-from rich import print
 import professor_view
 import student_view
 from database import Database

@@ -6,21 +6,21 @@ from user import User
 class Student(User):
     def __init__(self,first_name,last_name,email,password):
         super().__init__(first_name,last_name, email, password)
-        self.__email = email
-        self.__first_name = first_name
+        # self.__email = email
+        # self.__first_name = first_name
         self.__grades = {}
         self.__is_logged_in = False
         self.__enrolled_courses = enroll.Enrollment()
         self.__student_course = Course()
 
-    def get_enrolled_courses(self):
+    def get_enrolled_courses(self) -> list:
         try:
             return self.__enrolled_courses.view_enrolled_courses()
         except ValueError as e:
             print(e)
 
 
-    def get_grades(self):
+    def get_grades(self) -> dict:
         return self.__grades
 
     def enroll(self, course_name):

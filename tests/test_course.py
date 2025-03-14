@@ -31,7 +31,6 @@ class TestCourse(unittest.TestCase):
         with self.assertRaises(Exception) as context:
             self.course_manager.remove_course("Biology")
 
-
     def test_that_the_save_courses_to_file_is_working_well(self):
         self.course_manager.add_course("Mathematics")
         self.course_manager.add_course("Physics")
@@ -62,3 +61,5 @@ class TestCourse(unittest.TestCase):
         self.course_manager.add_course("English")
         self.assertEqual(["Computer Science","English"], self.course_manager.view_course())
 
+if __name__ == '__main__':
+    unittest.main()
