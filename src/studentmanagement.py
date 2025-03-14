@@ -1,7 +1,6 @@
 import time
 
 import authentication
-from rich import print
 import professor_view
 import student_view
 from database import Database
@@ -46,7 +45,7 @@ class StudentManagementSystem:
         try:
             email = authentication.Authentication.validate_email(email)
             password = authentication.Authentication.validate_password(password)
-            holder_tuple = Database("professor_details.txt").load_from_file(email,password)
+            holder_tuple = Database("../data/professor_details.txt").load_from_file(email, password)
             holder = holder_tuple[0]
             print_loading_message("Login Professor")
             if holder_tuple[1]:
@@ -73,7 +72,7 @@ class StudentManagementSystem:
     def log_in_student(self, email, password):
         try:
             email = authentication.Authentication.validate_email(email)
-            holder_tuple = Database("student_details.txt").load_from_file(email,password)
+            holder_tuple = Database("../data/student_details.txt").load_from_file(email, password)
             holder = holder_tuple[0]
             print_loading_message("Login Student")
             if holder_tuple[1]:

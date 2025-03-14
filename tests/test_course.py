@@ -5,7 +5,7 @@ from course import Course
 class TestCourse(unittest.TestCase):
     def setUp(self):
         self.course_manager = Course()
-        self.test_file = "courses.txt"
+        self.test_file = "../data/courses.txt"
         if os.path.exists(self.test_file):
             os.remove(self.test_file)
 
@@ -30,7 +30,6 @@ class TestCourse(unittest.TestCase):
     def test_that_when_i_remove_nonexistent_course_it_throws_error(self):
         with self.assertRaises(Exception) as context:
             self.course_manager.remove_course("Biology")
-
 
     def test_that_the_save_courses_to_file_is_working_well(self):
         self.course_manager.add_course("Mathematics")
@@ -62,3 +61,5 @@ class TestCourse(unittest.TestCase):
         self.course_manager.add_course("English")
         self.assertEqual(["Computer Science","English"], self.course_manager.view_course())
 
+if __name__ == '__main__':
+    unittest.main()
