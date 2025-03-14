@@ -76,8 +76,8 @@ class Professor(User):
     def professor_assign_grades(self, course_name, student_email, score) -> None:
         if course_name in self.__professor_course.view_course():
             if student_email in self.__student_enrolled.view_students_in_course(course_name):
-                Grade().set_numeric_grade(course_name, student_email, score)
-                Database("../data/grade_details.txt").save_to_file_grades(course_name, student_email, score, GradeType.convert_score_to_grade_type(score))
+                data = Grade().set_numeric_grade(course_name, student_email, score)
+                Database("../data/grade_details.txt").save_to_file_grades(data[0],data[1],data[2])
             else:
                 raise ValueError("Student not enrolled")
         else:

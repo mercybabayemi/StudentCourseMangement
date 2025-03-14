@@ -38,10 +38,10 @@ class Database:
                         else:
                             return [], False
                 print(f"\033[1;31mEmail doesn't exist\033[0m")
-                return False
+                return [], False
         except Exception as e:
             print(f"\033[1;31mError loading from file: {e}\033[0m")
-            return False
+            return [],False
 
     def verify_email_exist(self, email):
         try:
