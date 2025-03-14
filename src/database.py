@@ -48,10 +48,10 @@ class Database:
             with open(self.__file_name, 'r') as file:
                 for line in file:
                     line = line.strip()
-                    if not line:  # Skip empty lines
+                    if not line:
                         continue
                     data = line.split(':')
-                    if len(data) != 4:  # Ensure there are exactly 4 fields
+                    if len(data) != 4:
                         print(f"\033[1;31mInvalid data format in file: {line}\033[0m")
                         continue
                     stored_firstname, stored_lastname, stored_email, stored_password = data
@@ -62,10 +62,10 @@ class Database:
             print(f"\033[1;31mError verifying email: {e}\033[0m")
             return False
 
-    def save_to_file_grades(self, course_name, student_email, grade, grade_type):
+    def save_to_file_grades(self, course_name, student_email,grade_type):
         try:
             with open(self.__file_name, 'a') as file:
-                file.write(f"{course_name}:{student_email}:{grade}:{grade_type}\n")
+                file.write(f"{course_name}:{student_email}:{grade_type}\n")
         except Exception as e:
             print(f"\033[1;31mError saving grades to file: {e}\033[0m")
 
@@ -80,8 +80,8 @@ class Database:
                     if len(data) != 4:
                         print(f"\033[1;31mInvalid data format in file: {line}\033[0m")
                         continue
-                    course_name, student_email, grade, grade_type = data
-                    return [course_name, student_email, grade, grade_type]
+                    course_name, student_email,grade_type = data
+                    return [course_name, student_email, grade_type]
             return []
         except Exception as e:
             print(f"\033[1;31mError loading grades from file: {e}\033[0m")
