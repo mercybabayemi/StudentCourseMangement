@@ -17,8 +17,6 @@ class Professor(User):
     def get_courses(self) -> dict:
         return self.__professor_course.get_courses()
 
-    def get_course(self, course_id) -> Course:
-        return self.__professor_course.courses.get(course_id, None)
 
 
     def register(self,first_name,last_name,email,password) -> None:
