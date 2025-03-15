@@ -38,20 +38,20 @@ def cases(choice):
     match choice:
         case "1":
             first_name = get_valid_input("Enter your first name: ", authentication.Authentication.validate_name,
-                                         "first name")
+                                         "first name").strip()
             last_name = get_valid_input("Enter your last name: ", authentication.Authentication.validate_name,
-                                        "last name")
+                                        "last name").strip()
             email = get_valid_input("Enter your email: ", authentication.Authentication.validate_email)
-            password = get_valid_input("Enter your password: ", authentication.Authentication.validate_password)
+            password = get_valid_input("Enter your password: ", authentication.Authentication.validate_password).strip()
             StudentManagementSystem().register_student(first_name, last_name, email, password)
 
         case "2":
             first_name = get_valid_input("Enter your first name: ", authentication.Authentication.validate_name,
-                                         "first name")
+                                         "first name").strip()
             last_name = get_valid_input("Enter your last name: ", authentication.Authentication.validate_name,
-                                        "last name")
+                                        "last name").strip()
             email = get_valid_input("Enter your email: ", authentication.Authentication.validate_email)
-            password = get_valid_input("Enter your password: ", authentication.Authentication.validate_password)
+            password = get_valid_input("Enter your password: ", authentication.Authentication.validate_password).strip()
             StudentManagementSystem().register_professor(first_name, last_name, email, password)
 
         case "3":
