@@ -1,4 +1,6 @@
 import os
+from typing import Any
+
 import bcrypt
 
 class Database:
@@ -23,7 +25,7 @@ class Database:
         except Exception as e:
             print(f"\033[1;31mError saving to file: {e}\033[0m")
 
-    def load_from_file(self, email, password) -> None :
+    def load_from_file(self, email, password) -> tuple[list[Any], bool]:
         try:
             with open(self.__file_name, 'r') as file:
                 for line in file:
