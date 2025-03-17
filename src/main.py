@@ -6,8 +6,7 @@ from student_management import StudentManagementSystem
 def display_menu():
     print("""
             Welcome to MEA Institute Application 
-
-            Here are our menu:
+            Choose between option 1-5:
             1. Register as Student
             2. Register as Professor
             3. Login as Professor
