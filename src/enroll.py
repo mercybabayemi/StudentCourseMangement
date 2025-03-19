@@ -27,6 +27,7 @@ class Enrollment:
         self.save_enrolled_courses()
 
 
+
     def un_enroll(self, student_email, course_name) -> None:
         if student_email in self.__enrolled_courses and self.__enrolled_courses[student_email] == course_name:
             del self.__enrolled_courses[student_email]
@@ -40,7 +41,9 @@ class Enrollment:
             for student_email, course_name in self.__enrolled_courses.items():
                 file.write(f"{student_email}:{course_name}\n")
 
+
     def load_enrolled_courses(self) -> None:
+
         self.__enrolled_courses = {}
         try:
             with open("../data/enrolled_courses.txt", "r") as file:

@@ -8,8 +8,10 @@ def display(student) -> str:
         Choose from the following options (1-8) to proceed:
 
         1. View Courses Available
+
         2. Enroll in a course
         3. View Enrolled Courses
+
         4. Check Grade for a particular course
         5. find course by id
         6. find course id by course name
@@ -31,7 +33,9 @@ def cases(student,choice) -> None:
                 if courses == {}:
                     print("No course available")
                     return
+
                 print("Here are the course/courses available:")
+
                 print("-" * 40)
                 print(f"{'S/N':<5} | {'ID Number':<10} | {'Course'}")
                 print("-" * 40)
@@ -45,9 +49,12 @@ def cases(student,choice) -> None:
             try:
                 courses = Course().get_courses()
                 if courses == {}:
+
+         
                     print("No course available")
                     return
                 print("Here are the course/courses available:")
+
                 print("-" * 40)
                 print(f"{'S/N':<5} | {'ID Number':<10} | {'Course'}")
                 print("-" * 40)
@@ -76,9 +83,11 @@ def cases(student,choice) -> None:
             try:
                 courses = Course().get_courses()
                 if courses == {}:
+
                     print("No course available")
                     return
                 print("Here are the course/courses available:")
+
                 print("-" * 40)
                 print(f"{'S/N':<5} | {'ID Number':<10} | {'Course'}")
                 print("-" * 40)
