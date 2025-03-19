@@ -37,7 +37,9 @@ def case(professor,choice) -> None:
                 course = input("Enter course name:").lower()
                 student_email = input("Enter student email:")
                 student_email = authentication.Authentication.validate_email(student_email)
-                grade = int(input("Enter grade:"))
+                grade = float(input("Enter grade:"))
+                while grade < 1:
+                    print(f'\033[1;31mInvalid grade Please you can not enter number lesser than 1\033[0m')
                 professor.professor_assign_grades(course,student_email,grade)
                 print("Grade added successfully.")
             except Exception as e:
