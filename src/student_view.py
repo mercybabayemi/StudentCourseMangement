@@ -2,30 +2,29 @@ import time
 
 from course import Course
 
+
 def display(student) -> str:
     print(f"""
-    
+
         Choose from the following options (1-8) to proceed:
 
         1. View Courses Available
-
         2. Enroll in a course
         3. View Enrolled Courses
-
         4. Check Grade for a particular course
         5. find course by id
         6. find course id by course name
         7. Delete Course
         8. Log Out
-        
+
 """)
 
     choice = input("Enter your choice: ")
-    cases(student,choice)
+    cases(student, choice)
     return choice
 
 
-def cases(student,choice) -> None:
+def cases(student, choice) -> None:
     match choice:
         case "1":
             try:
@@ -33,9 +32,7 @@ def cases(student,choice) -> None:
                 if courses == {}:
                     print("No course available")
                     return
-
                 print("Here are the course/courses available:")
-
                 print("-" * 40)
                 print(f"{'S/N':<5} | {'ID Number':<10} | {'Course'}")
                 print("-" * 40)
@@ -49,12 +46,9 @@ def cases(student,choice) -> None:
             try:
                 courses = Course().get_courses()
                 if courses == {}:
-
-         
                     print("No course available")
                     return
                 print("Here are the course/courses available:")
-
                 print("-" * 40)
                 print(f"{'S/N':<5} | {'ID Number':<10} | {'Course'}")
                 print("-" * 40)
@@ -65,7 +59,6 @@ def cases(student,choice) -> None:
                 student.enroll(course)
             except Exception as e:
                 print(f'\033[1;31m{e}\033[0m')
-
 
         case "3":
             try:
@@ -78,16 +71,13 @@ def cases(student,choice) -> None:
             except Exception as e:
                 print(f'\033[1;31m{e}\033[0m')
 
-
         case "4":
             try:
                 courses = Course().get_courses()
                 if courses == {}:
-
                     print("No course available")
                     return
                 print("Here are the course/courses available:")
-
                 print("-" * 40)
                 print(f"{'S/N':<5} | {'ID Number':<10} | {'Course'}")
                 print("-" * 40)
@@ -99,7 +89,6 @@ def cases(student,choice) -> None:
             except Exception as e:
                 print(f'\033[1;31m{e}\033[0m')
 
-
         case "5":
             try:
                 course = int(input("Enter course id:"))
@@ -107,7 +96,6 @@ def cases(student,choice) -> None:
                 print(f"Here is the course id:{course}, and the course is:{course_name}")
             except Exception as e:
                 print(f'\033[1;31m{e}\033[0m')
-
 
         case "6":
             try:
@@ -128,9 +116,7 @@ def cases(student,choice) -> None:
             print_loading_message("Logging out")
 
 
-
-
-def print_loading_message(message, delay=0.5) -> None :
+def print_loading_message(message, delay=0.5) -> None:
     print(message, end="", flush=True)
     for _ in range(3):
         time.sleep(delay)

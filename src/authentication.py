@@ -3,9 +3,9 @@ import re
 class Authentication:
 
     @staticmethod
-    def validate_name(name, element) -> str:
+    def validate_name(name) -> str:
         if name is None or not re.fullmatch('[a-zA-Z]+', name) or len(name) < 2:
-            raise ValueError(f"Invalid {element}.\nYour name must contain only letters and the length must be greater than 2")
+            raise ValueError(f"Invalid name.\nYour name must contain only letters and the length must be greater than 2")
         return name
 
     @staticmethod

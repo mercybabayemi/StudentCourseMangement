@@ -20,14 +20,11 @@ def display_menu():
     cases(choice)
 
 
-def get_valid_input(prompt, validation_function, field_name=None):
+def get_valid_input(prompt, validation_function):
     while True:
         try:
             value = input(prompt).strip()
-            if field_name:
-                value = validation_function(value, field_name)
-            else:
-                value = validation_function(value)
+            value = validation_function(value)
             return value
         except Exception as e:
             print(f'\033[1;31m{e}\033[0m')
@@ -36,19 +33,16 @@ def get_valid_input(prompt, validation_function, field_name=None):
 def cases(choice):
     match choice:
         case "1":
-            first_name = get_valid_input("Enter your first name: ", authentication.Authentication.validate_name,
-                                         "first name").strip()
-            last_name = get_valid_input("Enter your last name: ", authentication.Authentication.validate_name,
-                                        "last name").strip()
+            first_name = get_valid_input("Enter your first name: ", authentication.Authentication.validate_name).strip()
+            last_name = get_valid_input("Enter your last name: ", authentication.Authentication.validate_name).strip()
+
             email = get_valid_input("Enter your email: ", authentication.Authentication.validate_email)
             password = get_valid_input("Enter your password: ", authentication.Authentication.validate_password).strip()
             StudentManagementSystem().register_student(first_name, last_name, email, password)
 
         case "2":
-            first_name = get_valid_input("Enter your first name: ", authentication.Authentication.validate_name,
-                                         "first name").strip()
-            last_name = get_valid_input("Enter your last name: ", authentication.Authentication.validate_name,
-                                        "last name").strip()
+            first_name = get_valid_input("Enter your first name: ", authentication.Authentication.validate_name).strip()
+            last_name = get_valid_input("Enter your last name: ", authentication.Authentication.validate_name).strip()
             email = get_valid_input("Enter your email: ", authentication.Authentication.validate_email)
             password = get_valid_input("Enter your password: ", authentication.Authentication.validate_password).strip()
             StudentManagementSystem().register_professor(first_name, last_name, email, password)
