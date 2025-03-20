@@ -82,7 +82,7 @@ class StudentManagementSystem:
                             """)
                 choice = ""
                 while choice != "8":
-                    choice = student_view.display(student, stored_first_name, stored_last_name, stored_email)
+                    choice = student_view.display(student)
         except Exception as e:
             print("\033[1;31mSomething went wrong!\033[0m")
             print(f'\033[1;31m{e}\033[0m')
