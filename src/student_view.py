@@ -91,6 +91,10 @@ def cases(student, choice) -> None:
 
         case "5":
             try:
+                courses = Course().get_courses()
+                if courses == {}:
+                    print("No course available")
+                    return
                 course = int(input("Enter course id:"))
                 course_name = Course().find_course_using_id(course)
                 print(f"Here is the course id:{course}, and the course is:{course_name}")
@@ -99,6 +103,10 @@ def cases(student, choice) -> None:
 
         case "6":
             try:
+                courses = Course().get_courses()
+                if courses == {}:
+                    print("No course available")
+                    return
                 course_name = input("Enter course name:")
                 course_id = Course().find_id_by_course(course_name)
                 print(f"Here is the course id:{course_id}, and the course is:{course_name}")
@@ -107,6 +115,17 @@ def cases(student, choice) -> None:
 
         case '7':
             try:
+                courses = Course().get_courses()
+                if courses == {}:
+                    print("No course available")
+                    return
+                print("Here are the course/courses available:")
+                print("-" * 40)
+                print(f"{'S/N':<5} | {'ID Number':<10} | {'Course'}")
+                print("-" * 40)
+                for sn, (id_number, course) in enumerate(courses.items(), start=1):
+                    print(f"{sn:<5} | {id_number:<10} | {course}")
+                    print("-" * 40)
                 course_name = input("Enter course name:")
                 student.un_enroll(course_name)
             except Exception as e:
